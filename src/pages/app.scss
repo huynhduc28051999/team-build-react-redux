@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+.ag-grid-custom .header-def {
+  display: flex;
+  justify-content: flex-end;
+}
+.ag-grid-custom .header-def button {
+  margin-right: 5px;
+}
+.site-drawer-render-in-current-wrapper {
+  position: relative;
+  // padding: 48px;
+  overflow: hidden;
+  text-align: center;
+  background: #fafafa;
+  border: 1px solid #ebedf0;
+  border-radius: 2px;
+}
+@import '~antd/dist/antd.css';

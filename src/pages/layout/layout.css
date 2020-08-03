@@ -1,0 +1,19 @@
+.logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
+
+.site-layout-sub-header-background {
+  background: #fff;
+}
+
+.site-layout-background {
+  background: #fff;
+}
+section.ant-layout.ant-layout-has-sider {
+  height: 100vh;
+}
+.ant-layout-footer {
+  padding: 12px 25px !important;
+}

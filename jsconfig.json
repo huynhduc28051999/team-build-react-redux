@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "checkJs": false,
+    "baseUrl": ".",
+    "paths": {
+      "@components": ["./src/components/index"],
+      "@configs": ["./src/configs/index"],
+      "@pages": ["./src/pages/index.js"],
+      "@actions": ["./src/actions/index"],
+      "@components/*": ["./src/components/*"],
+      "@configs/*": ["./src/configs/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@actions/*": ["./src/actions/*"],
+      "@constants": ["./src/constants"],
+      "@constants/*": ["./src/constants/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
+  },
+  "exclude": [
+    "node_modules", "public"
+  ],
+  "include": [
+    "src"
+  ]
+}

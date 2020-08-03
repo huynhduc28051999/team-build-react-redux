@@ -1,0 +1,33 @@
+{
+    "env": {
+        "browser": true,
+        "es2020": true,
+        "mocha": true
+    },
+    "extends": "plugin:react/recommended",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 11,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "react/prop-types": 0,
+        "react/forbid-prop-types": 0,
+        "react-hooks/exhaustive-deps": "off",
+        "no-unused-expressions": "off"
+    },
+    "overrides": [
+        {
+            "files": ["*.js"],
+            "rules": {
+                "no-unused-expressions": "off",
+                "react-hooks/exhaustive-deps": "off"
+            }
+        }
+    ]
+}
