@@ -180,10 +180,41 @@ export function* deleteDataGroup(data) {
   }
 }
 
+function searchGroup(fromData) {
+  const { data } = fromData.payload
+  return axiosClient.post(apiUrl.URL_API_SEARCH_GROUP, data)
+}
+
+export function* searchDataGroup(data) {
+  try {
+    const response = yield call(searchGroup, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(group.searchGroupSuccess(dataRes))
+    } else {
+      yield put(group.searchGroupFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(group.searchGroupFail(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
+
 export function* actionGroup() {
   yield takeEvery(type.GET_ALL_GROUP, getDataAllGroup)
   yield takeEvery(type.ADD_GROUP, addDataGroup)
   yield takeEvery(type.GET_GROUP_ID, getDataGroupById)
   yield takeEvery(type.UPDATE_GROUP, updateDataGroup)
   yield takeEvery(type.DELETE_GROUP, deleteDataGroup)
+  yield takeEvery(type.SEARCH_GROUP, searchDataGroup)
 }

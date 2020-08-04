@@ -6,7 +6,8 @@ const initialState = {
   groups: [],
   error: null,
   isSuccess: false,
-  groupById: null
+  groupById: null,
+  searchGroup: []
 }
 const groupReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -129,6 +130,26 @@ const groupReducer = (state = initialState, action) => {
         isLoading: true,
         error: error,
         isSuccess: false
+      }
+    }
+    case Type.SEARCH_GROUP: {
+      return {
+        ...state,
+        error: null
+      }
+    }
+    case Type.SEARCH_GROUP_SUCCESS: {
+      const { data } = action.payload
+      return {
+        ...state,
+        searchGroup: data
+      }
+    }
+    case Type.SEARCH_GROUP_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        error: error
       }
     }
     default: {

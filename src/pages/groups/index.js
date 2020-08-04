@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useCallback, useReducer } from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllGroup, deleteGroup } from '@actions/group'
-import AvatarGroup from './avatarGroup'
+import AvatarDetail from '@components/avatarDetail'
 import { Button, Spin, Modal } from 'antd'
 import GroupForm from './groupForm'
 import stateReducer from '@components/commonFun/stateReducer'
@@ -60,11 +60,13 @@ function Groups() {
       },
       {
         headerName: 'Số lượng sự kiện',
-        field: 'numberOfEvent'
+        field: 'numberOfEvent',
+        filter: 'agNumberColumnFilter'
       },
       {
         headerName: 'Số lượng nhân viên',
-        field: 'numberOfUser'
+        field: 'numberOfUser',
+        filter: 'agNumberColumnFilter'
       }
     ],
     rowData: groups || [],
@@ -121,7 +123,7 @@ function Groups() {
       }
     },
     frameworkComponents: {
-      avatarRenderer: AvatarGroup
+      avatarRenderer: AvatarDetail
     }
   }
   const hadleOpenDrawer = useCallback((isAdd = true) => {

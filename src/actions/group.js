@@ -132,3 +132,30 @@ export const deleteGroupFail = (error) => {
     }
   }
 }
+
+export const searchGroup = ({ keyword }) => {
+  return {
+    type: type.SEARCH_GROUP,
+    payload: {
+      data: { keyword }
+    }
+  }
+}
+
+export const searchGroupSuccess = (data) => {
+  return {
+    type: type.SEARCH_GROUP_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const searchGroupFail = (error) => {
+  return {
+    type: type.SEARCH_GROUP_FAIL,
+    payload: {
+      error
+    }
+  }
+}
