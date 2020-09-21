@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import LoginForm from './loginForm'
 import './index.scss'
 

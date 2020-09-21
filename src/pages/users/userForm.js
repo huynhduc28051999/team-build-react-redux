@@ -3,7 +3,6 @@ import { Drawer, Form, Input, Avatar, Button, Spin, DatePicker, Radio, Select } 
 import stateReducer from '@components/commonFun/stateReducer'
 import { useSelector, useDispatch } from 'react-redux'
 import { addUser } from '@actions/user'
-import { Loading } from '@components'
 import * as moment from 'moment'
 import { getAllPermisson } from '@actions/permission'
 import SeachGroup from './searchGroup'

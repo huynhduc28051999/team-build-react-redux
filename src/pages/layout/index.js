@@ -1,6 +1,4 @@
 import React, { useEffect, useCallback } from 'react'
-import { Layout as LayoutAnt, Menu } from 'antd'
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons'
 import './layout.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { meContruction } from '@actions/me'

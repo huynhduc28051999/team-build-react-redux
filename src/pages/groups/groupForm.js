@@ -3,8 +3,6 @@ import { Drawer, Form, Input, Avatar, Button, Spin } from 'antd'
 import stateReducer from '@components/commonFun/stateReducer'
 import { useSelector, useDispatch } from 'react-redux'
 import { addGroup, getGroupById, updateGroup } from '@actions/group'
-import { Loading } from '@components'
-
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },

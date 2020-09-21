@@ -99,7 +99,7 @@ const groupReducer = (state = initialState, action) => {
         isSuccess: true
       }
     }
-    case Type.GET_GROUP_ID_FAIL: {
+    case Type.UPDATE_GROUP_FAIL: {
       const { error } = action.payload
       return {
         ...state,

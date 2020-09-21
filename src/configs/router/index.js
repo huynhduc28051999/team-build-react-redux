@@ -28,3 +28,23 @@ export const authenticatedRoutes = [
     component: 'users'
   }
 ]
+
+export const menuRoute = [
+  {
+    title: 'Hệ thống',
+    childs: [
+      {
+        name: 'Profile',
+        path: '/profile'
+      },
+      {
+        name: 'Groups',
+        path: '/groups'
+      },
+      {
+        name: 'Users',
+        path: '/users'
+      }
+    ]
+  }
+]

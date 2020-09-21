@@ -156,7 +156,7 @@ function Groups() {
       <div
         className='ag-theme-alpine'
         style={{
-          height: 'calc(100vh - 180px)'
+          height: 'calc(100vh - 5rem)'
         }}>
           <Spin spinning={isLoadingGet} />
           <AgGridReact
