@@ -3,11 +3,13 @@ import authReducer from './auth'
 import meReducer from './me'
 import groupReducer from "./group"
 import userReducer from "./user"
+import permissionReducer from "./permission"
 
 const rootReducer = combineReducers({
   auth: authReducer,
   me: meReducer,
   group: groupReducer,
-  user: userReducer
+  user: userReducer,
+  permission: permissionReducer
 })
 export default rootReducer

@@ -37,6 +37,43 @@ export function* getDataAllUser() {
   }
 }
 
+
+function addUser(fromData) {
+  const { data } = fromData.payload
+  return axiosClient.post(apiUrl.URL_API_ADD_USER, data)
+}
+
+export function* addDataUser(data) {
+  try {
+    const response = yield call(addUser, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(user.addUserSuccess(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Thêm nhân viên thành công !'
+      })
+      yield put(user.getAllUser())
+    } else {
+      yield put(user.addUserFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+    yield put(user.addUserFail(error))
+  }
+}
+
 export function* actionUser() {
   yield takeEvery(type.GET_ALL_USER, getDataAllUser)
+  yield takeEvery(type.ADD_USER, addDataUser)
 }

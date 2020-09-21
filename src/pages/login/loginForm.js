@@ -5,10 +5,10 @@ import { loginContruction } from '@actions/auth';
 
 const layout = {
   labelCol: {
-    span: 8,
+    span: 24,
   },
   wrapperCol: {
-    span: 16,
+    span: 24,
   },
 };
 const tailLayout = {
@@ -72,7 +72,7 @@ export default function LoginForm({
         <Input.Password />
       </Form.Item>
 
-      <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+      <Form.Item {...layout} name="remember" valuePropName="checked">
         <Checkbox>Remember me</Checkbox>
       </Form.Item>
 

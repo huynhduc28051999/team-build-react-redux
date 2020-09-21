@@ -10,6 +10,7 @@
     "ag-grid-react": "^23.2.1",
     "antd": "^4.3.5",
     "axios": "^0.19.2",
+    "customize-cra": "^1.0.0",
     "moment": "^2.27.0",
     "node-sass": "^4.14.1",
     "query-string": "^6.13.1",
@@ -46,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.11.0",
     "eslint-plugin-react": "^7.20.3",
     "react-app-rewired": "^2.1.6"
   }

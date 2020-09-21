@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Redirect } from 'react-router-dom'
 import Layout from '@pages/layout'
 
@@ -10,8 +10,7 @@ export const PrivateRoute = props => {
   } = props
   if (!isAuth) return <Redirect to='/login' />
   return (
-    <Fragment>
-      <Layout history={history} children={children}/>
-    </Fragment>
+    //eslint-disable-next-line
+    <Layout history={history} children={children}/>
   )
 }

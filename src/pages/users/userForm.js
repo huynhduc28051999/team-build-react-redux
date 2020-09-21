@@ -1,12 +1,14 @@
 import React, { useReducer, useCallback, useImperativeHandle, useEffect } from 'react'
-import { Drawer, Form, Input, Avatar, Button, Spin, DatePicker, Radio } from 'antd'
+import { Drawer, Form, Input, Avatar, Button, Spin, DatePicker, Radio, Select } from 'antd'
 import stateReducer from '@components/commonFun/stateReducer'
 import { useSelector, useDispatch } from 'react-redux'
-import { addGroup, getGroupById, updateGroup } from '@actions/group'
+import { addUser } from '@actions/user'
 import { Loading } from '@components'
 import * as moment from 'moment'
+import { getAllPermisson } from '@actions/permission'
 import SeachGroup from './searchGroup'
 
+const { Option } = Select
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -15,18 +17,21 @@ const layout = {
 function UserForm({ drawerRef }) {
   const isSuccess = useSelector(state => state.group.isSuccess)
   const isLoading = useSelector(state => state.group.isLoading)
+  const permission = useSelector(state => state.permission.permission)
   const dispatch = useDispatch()
-  const groupById = useSelector(state => state.group.groupById)
   const [state, setState] = useReducer(stateReducer, {
     visible: false,
-    idGroup: null,
+    idUser: null,
     imageSrc: ''
   })
   const [form] = Form.useForm()
-  const { visible, idGroup, imageSrc } = state
+  const { visible, idUser, imageSrc } = state
   useImperativeHandle(drawerRef, () => ({
     handleOpen
   }))
+  useEffect(() => {
+    dispatch(getAllPermisson())
+  }, [])
   useEffect(() => {
     if (isSuccess) {
       setState({
@@ -34,29 +39,29 @@ function UserForm({ drawerRef }) {
       })
     }
   }, [isSuccess])
-  useEffect(() => {
-    if (groupById) {
-      form.setFieldsValue({
-        name: groupById?.name,
-        description: groupById?.description,
-        avatar: groupById?.avatar
-      })
-      setState({
-        imageSrc: groupById?.avatar
-      })
-    }
-  }, [groupById])
-  const handleOpen = useCallback((group = null) => {
+  // useEffect(() => {
+  //   if (groupById) {
+  //     form.setFieldsValue({
+  //       name: groupById?.name,
+  //       description: groupById?.description,
+  //       avatar: groupById?.avatar
+  //     })
+  //     setState({
+  //       imageSrc: groupById?.avatar
+  //     })
+  //   }
+  // }, [groupById])
+  const handleOpen = useCallback((user = null) => {
     form.resetFields()
     setState({
       imageSrc: ''
     })
-    if (group) {
-      dispatch(getGroupById(group?._id))
-    }
+    // if (group) {
+    //   dispatch(getGroupById(group?._id))
+    // }
     setState({
       visible: true,
-      idGroup: group?._id
+      idUser: user?._id
     })
   }, [])
   const onClose = useCallback(() => {
@@ -74,19 +79,42 @@ function UserForm({ drawerRef }) {
     [form]
   )
   const onFinish = values => {
-    if (!idGroup) {
-      dispatch(addGroup(values))
-    } else {
-      dispatch(
-        updateGroup(
-          { _id: idGroup, input: values }
-        )
-      )
-    }
+    const {
+      name,
+      password,
+      email,
+      phoneNumber,
+      birthday,
+      gender,
+      idGroup,
+      avatar,
+      role
+    } = values
+    if (!idUser) {
+      console.log(idGroup)
+      dispatch(addUser({
+        name,
+        password,
+        email,
+        phoneNumber,
+        birthday,
+        gender,
+        idGroup,
+        avatar,
+        role
+      }))
+    } 
+    // else {
+    //   dispatch(
+    //     updateGroup(
+    //       { _id: idGroup, input: values }
+    //     )
+    //   )
+    // }
   }
   return (
     <Drawer
-      title={idGroup ? 'Chỉnh sửa nhân viên' : 'Thêm nhân viên'}
+      title={idUser ? 'Chỉnh sửa nhân viên' : 'Thêm nhân viên'}
       placement="right"
       closable={false}
       onClose={onClose}
@@ -145,6 +173,13 @@ function UserForm({ drawerRef }) {
         <Form.Item name='idGroup' label='Phòng ban'>
           <SeachGroup />
         </Form.Item>
+        <Form.Item name='role' label='Quyền hạn'>
+          <Select>
+            {permission.map(item => (
+              <Option key={item._id} value={item._id}>{item.description}</Option>
+            ))}
+          </Select>
+        </Form.Item>
         <Form.Item name='avatar' label='Link ảnh đại diện'>
           <Input onChange={avatarChange} placeholder='Nhập link ảnh đại diện' />
         </Form.Item>
@@ -157,7 +192,7 @@ function UserForm({ drawerRef }) {
         </Form.Item>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
           <Button type='primary' htmlType='submit' loading={isLoading}>
-            {idGroup ? 'Cập nhật' : 'Thêm mới'}
+            {idUser ? 'Cập nhật' : 'Thêm mới'}
           </Button>
         </Form.Item>
       </Form>

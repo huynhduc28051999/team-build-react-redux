@@ -16,17 +16,21 @@
         "react"
     ],
     "rules": {
-        "react/prop-types": 0,
+        "react/prop-types": "off",
         "react/forbid-prop-types": 0,
         "react-hooks/exhaustive-deps": "off",
-        "no-unused-expressions": "off"
+        "no-unused-expressions": "off",
+        "react/no-children-prop": "off"
     },
     "overrides": [
         {
             "files": ["*.js"],
             "rules": {
                 "no-unused-expressions": "off",
-                "react-hooks/exhaustive-deps": "off"
+                "react-hooks/exhaustive-deps": "off",
+                "react/prop-types": "off",
+                "react/forbid-prop-types": "off",
+                "react/no-children-prop": "off"
             }
         }
     ]

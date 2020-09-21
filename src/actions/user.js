@@ -24,3 +24,28 @@ export const getAllUserFail = error => {
     }
   }
 }
+
+export const addUser = (data) => {
+  return {
+    type: type.ADD_USER,
+    payload: { data }
+  }
+}
+
+export const addUserSuccess = data => {
+  return {
+    type: type.ADD_USER_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const addUserFail = error => {
+  return {
+    type: type.ADD_USER_FAIL,
+    payload: {
+      error
+    }
+  }
+}
