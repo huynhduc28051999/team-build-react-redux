@@ -103,3 +103,30 @@ export const updateUserFail = error => {
     }
   }
 }
+
+export const deleteUser = ({ ids }) => {
+  return {
+    type: type.DELETE_USER,
+    payload: {
+      data: { ids }
+    }
+  }
+}
+
+export const deleteUserSuccess = (data) => {
+  return {
+    type: type.DELETE_USER_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const deleteUserFail = (error) => {
+  return {
+    type: type.DELETE_USER_FAIL,
+    payload: {
+      error
+    }
+  }
+}

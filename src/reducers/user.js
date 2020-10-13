@@ -110,6 +110,30 @@ const userReducer = (state = initialState, action) => {
         isSuccess: false
       }
     }
+    case Type.DELETE_USER: {
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+        isSuccess: false
+      }
+    }
+    case Type.DELETE_USER_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccess: true
+      }
+    }
+    case Type.DELETE_USER_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        isLoading: true,
+        error: error,
+        isSuccess: false
+      }
+    }
     default: {
       return state
     }

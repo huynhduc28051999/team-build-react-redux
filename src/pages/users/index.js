@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useCallback, useReducer } from 'react'
 import * as moment from 'moment'
 import { AgGridReact } from 'ag-grid-react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAllUser } from '@actions/user'
+import { getAllUser, deleteUser } from '@actions/user'
 import AvatarDetail from '@components/avatarDetail'
 import { Button, Spin, Modal } from 'antd'
 import UserForm from './userForm'
@@ -158,14 +158,14 @@ function User() {
     }
   }, [gridApi])
   const handleDelete = useCallback(() => {
-    const groups = gridApi.current.getSelectedRows()
+    const users = gridApi.current.getSelectedRows()
     Modal.confirm({
       okText: 'Có',
       cancelText: 'Không',
       title: 'Bạn muốn xóa các nhân viên đang chọn ?',
       onOk: () => {
-        const ids = groups?.map(item => item._id)
-        // dispatch(deleteGroup({ ids }))
+        const ids = users?.map(item => item._id)
+        dispatch(deleteUser({ ids }))
       }
     })
   }, [])

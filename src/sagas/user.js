@@ -149,9 +149,45 @@ export function* updateDataUser(data) {
   }
 }
 
+function deleteUser(fromData) {
+  const { data } = fromData.payload
+  return axiosClient.post(apiUrl.URL_API_DELETE_USER, data)
+}
+
+export function* deleteDataUser(data) {
+  try {
+    const response = yield call(deleteUser, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(user.deleteUserSuccess(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Xóa nhân viên thành công !'
+      })
+      yield put(user.getAllUser())
+    } else {
+      yield put(user.deleteUserFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(user.deleteUserFail(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
 export function* actionUser() {
   yield takeEvery(type.GET_ALL_USER, getDataAllUser)
   yield takeEvery(type.ADD_USER, addDataUser)
   yield takeEvery(type.GET_USER_ID, getDataUserById)
   yield takeEvery(type.UPDATE_USER, updateDataUser)
+  yield takeEvery(type.DELETE_USER, deleteDataUser)
 }
