@@ -28,6 +28,10 @@ function Groups() {
     } else {
       gridApi.current?.hideOverlay()
     }
+    setState({
+      showEdit: false,
+      showDelete: false
+    })
   }, [isLoadingGet])
   const handleResize = useCallback((e) => {
     if (e) e.preventDefault()

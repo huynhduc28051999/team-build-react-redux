@@ -82,7 +82,7 @@ function GroupForm({ drawerRef }) {
   }
   return (
     <Drawer
-      title={idGroup ? 'Chỉnh sửa phòng ban' : 'Thêm phòng ban'}
+      title={idGroup ? groupById?.name : 'Thêm phòng ban'}
       placement="right"
       closable={false}
       onClose={onClose}
@@ -91,30 +91,33 @@ function GroupForm({ drawerRef }) {
       getContainer={false}
       style={{ position: 'absolute' }}
     >
-      <Spin spinning={isLoading} />
-      <Form form={form} {...layout} name='form-group' onFinish={onFinish}>
-        <Form.Item name='name' label='Tên nhóm' rules={[{ required: true }]}>
-          <Input placeholder='Nhập tên nhóm hiển thị' />
-        </Form.Item>
-        <Form.Item name='description' label='Mô tả thông tin'>
-          <Input.TextArea rows={5} placeholder='Nhập thông tin mô tả' />
-        </Form.Item>
-        <Form.Item name='avatar' label='Link ảnh đại diện'>
-          <Input onChange={avatarChange} placeholder='Nhập link ảnh đại diện' />
-        </Form.Item>
-        <Form.Item
-          dependencies={['avatar']}
-          name='images'
-          label='Ảnh đại diện'
-        >
-          <Avatar src={imageSrc} size={128} />
-        </Form.Item>
-        <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
-          <Button type='primary' htmlType='submit' loading={isLoading}>
-            {idGroup ? 'Cập nhật' : 'Thêm mới'}
-          </Button>
-        </Form.Item>
-      </Form>
+      {isLoading ? (
+        <Spin spinning={isLoading} size='large' />
+      ) : (
+          <Form form={form} {...layout} name='form-group' onFinish={onFinish}>
+            <Form.Item name='name' label='Tên nhóm' rules={[{ required: true }]}>
+              <Input placeholder='Nhập tên nhóm hiển thị' />
+            </Form.Item>
+            <Form.Item name='description' label='Mô tả thông tin'>
+              <Input.TextArea rows={5} placeholder='Nhập thông tin mô tả' />
+            </Form.Item>
+            <Form.Item name='avatar' label='Link ảnh đại diện'>
+              <Input onChange={avatarChange} placeholder='Nhập link ảnh đại diện' />
+            </Form.Item>
+            <Form.Item
+              dependencies={['avatar']}
+              name='images'
+              label='Ảnh đại diện'
+            >
+              <Avatar src={imageSrc} size={128} />
+            </Form.Item>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+              <Button type='primary' htmlType='submit' loading={isLoading}>
+                {idGroup ? 'Cập nhật' : 'Thêm mới'}
+              </Button>
+            </Form.Item>
+          </Form>
+        )}
     </Drawer>
   )
 }

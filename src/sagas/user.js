@@ -73,7 +73,85 @@ export function* addDataUser(data) {
   }
 }
 
+
+function getUserById(fromData) {
+  const { data } = fromData.payload
+  console.log(data)
+  return axiosClient.get(apiUrl.URL_API_GET_USER_ID, {
+    params: {
+      id: data
+    }
+  })
+}
+
+export function* getDataUserById(data) {
+  try {
+    const response = yield call(getUserById, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(user.getUserByIdSuccess(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Lấy dữ liệu nhân viên thành công !'
+      })
+    } else {
+      yield put(user.getUserByIdFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+    yield put(user.getUserByIdFail(error))
+  }
+}
+
+
+function updateUser(fromData) {
+  const { data } = fromData.payload
+  return axiosClient.post(apiUrl.URL_API_UPDATE_USER, data)
+}
+
+export function* updateDataUser(data) {
+  try {
+    const response = yield call(updateUser, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(user.updateUserSuccess(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'chỉnh sửa nhân viên thành công !'
+      })
+      yield put(user.getAllUser())
+    } else {
+      yield put(user.updateUserFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(user.updateUserFail(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
 export function* actionUser() {
   yield takeEvery(type.GET_ALL_USER, getDataAllUser)
   yield takeEvery(type.ADD_USER, addDataUser)
+  yield takeEvery(type.GET_USER_ID, getDataUserById)
+  yield takeEvery(type.UPDATE_USER, updateDataUser)
 }

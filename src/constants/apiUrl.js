@@ -15,5 +15,7 @@ export const URL_API_SEARCH_GROUP = '/group/search-groups'
 
 export const URL_API_GET_ALL_USER = '/user/get-all-user'
 export const URL_API_ADD_USER = '/user/add-user'
+export const URL_API_GET_USER_ID = '/user/user-by-id'
+export const URL_API_UPDATE_USER = '/user/update-user'
 
 export const URL_API_GET_PERMISSION = '/permission/permissions'

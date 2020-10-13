@@ -52,7 +52,7 @@ const groupReducer = (state = initialState, action) => {
       const { error } = action.payload
       return {
         ...state,
-        isLoading: true,
+        isLoading: false,
         error: error,
         isSuccess: false
       }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Select } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { searchGroup as searchDispath } from '@actions/group'
@@ -6,7 +6,7 @@ import { searchGroup as searchDispath } from '@actions/group'
 const { Option } = Select
 
 let timeTypingKeyboard
-function SearchGroup() {
+function SearchGroup(props) {
   const searchGroup = useSelector(state => state.group.searchGroup)
   const dispatch = useDispatch()
   const onSearch = (value) => {
@@ -19,8 +19,14 @@ function SearchGroup() {
       }, 200)
     }
   }
+  useEffect(() => {
+    if (props.value) {
+      onSearch(props.value)
+    }
+  }, [props.value])
   return (
     <Select
+      {...props}
       showSearch
       placeholder='Gõ để tìm kiếm phòng ban'
       optionFilterProp='children'

@@ -49,3 +49,57 @@ export const addUserFail = error => {
     }
   }
 }
+
+export const getUserById = data => {
+  return {
+    type: type.GET_USER_ID,
+    payload: {
+      data
+    }
+  }
+}
+
+export const getUserByIdSuccess = data => {
+  return {
+    type: type.GET_USER_ID_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const getUserByIdFail = error => {
+  return {
+    type: type.GET_USER_ID_FAIL,
+    payload: {
+      error
+    }
+  }
+}
+
+export const updateUser = data => {
+  return {
+    type: type.UPDATE_USER,
+    payload: {
+      data
+    }
+  }
+}
+
+export const updateUserSuccess = data => {
+  return {
+    type: type.UPDATE_USER_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const updateUserFail = error => {
+  return {
+    type: type.UPDATE_USER_FAIL,
+    payload: {
+      error
+    }
+  }
+}
