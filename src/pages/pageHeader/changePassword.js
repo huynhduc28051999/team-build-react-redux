@@ -59,7 +59,7 @@ function ChangePassword({ modalRef }) {
   return (
     <Modal
       visible={visible}
-      title='Change password'
+      title='Thay đổi mật khẩu'
       footer={[
         <Button key="back" onClick={closeModal}>
           Hủy

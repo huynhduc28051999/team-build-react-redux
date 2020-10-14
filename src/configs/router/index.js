@@ -10,22 +10,27 @@ export const authenticatedRoutes = [
   {
     isExact: true,
     path: '/home',
-    component: 'home'
+    component: 'home',
   },
   {
     isExact: true,
     path: '/profile',
-    component: 'profile'
+    component: 'profile',
   },
   {
     isExact: true,
     path: '/groups',
-    component: 'groups'
+    component: 'groups',
   },
   {
     isExact: true,
     path: '/users',
-    component: 'users'
+    component: 'users',
+  },
+  {
+    isExact: true,
+    path: '/detailGroup/:_id?',
+    component: 'detailGroup'
   }
 ]
 

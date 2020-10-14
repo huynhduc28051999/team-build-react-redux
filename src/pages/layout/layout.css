@@ -17,3 +17,8 @@ section.ant-layout.ant-layout-has-sider {
 .ant-layout-footer {
   padding: 12px 25px !important;
 }
+.site-layout-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+}

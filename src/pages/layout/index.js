@@ -4,6 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { meContruction } from '@actions/me'
 import PageHeader from '@pages/pageHeader'
 import { logout } from '@actions/auth'
+import { Layout as LayoutAntd } from 'antd'
+
+const { Content } = LayoutAntd
 
 const Layout = (props) => {
   const {
@@ -34,7 +37,7 @@ const Layout = (props) => {
         backgroundAttachment: 'fixed',
         backgroundSize: 'cover',
         overflow: 'hidden',
-        WebkitOverflowScrolling: 'touch'
+        WebkitOverflowScrolling: 'touch',
       }}
     >
       <PageHeader
@@ -43,14 +46,21 @@ const Layout = (props) => {
         currentUser={currentUser}
         onLogout={onLogout}
       />
-      <div style={{ height: 'calc(100vh - 2.75rem)' }}>
-        {React.cloneElement(children, {
-          me: currentUser,
-          permission: permission
-        })}
-      </div>
+      <LayoutAntd className="layout">
+        <Content>
+          <div
+            className="site-layout-content"
+            style={{ height: 'calc(100vh - 2.75rem)' }}
+          >
+            {React.cloneElement(children, {
+              me: currentUser,
+              permission: permission,
+            })}
+          </div>
+        </Content>
+      </LayoutAntd>
     </div>
-  );
+  )
 }
 
 export default React.memo(Layout)

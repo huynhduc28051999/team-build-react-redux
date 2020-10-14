@@ -18,25 +18,28 @@ function PageHeader(props) {
   const goHome = useCallback(() => history.push('/home'), [history])
   const goBack = useCallback(() => history.goBack(), [history])
 
-  const menu = useMemo(() => (
-    <Menu>
-      <Menu.Item>
-        <a style={{ textTransform: 'uppercase' }}>{currentUser?.name}</a>
-      </Menu.Item>
-      <Menu.Item icon={<UserOutlined />}>
-        <a onClick={() => modalRef.current?.openModal()}>Thông tin cá nhân</a>
-      </Menu.Item>
-      <Menu.Item icon={<SettingOutlined />}>
-        <a>Cài đặt</a>
-      </Menu.Item>
-      <Menu.Item icon={<EditOutlined />}>
-        <a>Chỉnh sửa trang chủ</a>
-      </Menu.Item>
-      <Menu.Item icon={<PoweroffOutlined />}>
-        <a onClick={() => onLogout()}>Đăng xuất</a>
-      </Menu.Item>
-    </Menu>
-  ), [currentUser])
+  const menu = useMemo(
+    () => (
+      <Menu>
+        <Menu.Item>
+          <a style={{ textTransform: 'uppercase' }}>{currentUser?.name}</a>
+        </Menu.Item>
+        <Menu.Item icon={<UserOutlined />}>
+          <Link to='/profile'>Thông tin cá nhân</Link>
+        </Menu.Item>
+        <Menu.Item icon={<SettingOutlined />}>
+          <a onClick={() => modalRef.current?.openModal()}>Thay đổi mật khẩu</a>
+        </Menu.Item>
+        <Menu.Item icon={<EditOutlined />}>
+          <a>Chỉnh sửa trang chủ</a>
+        </Menu.Item>
+        <Menu.Item icon={<PoweroffOutlined />}>
+          <a onClick={() => onLogout()}>Đăng xuất</a>
+        </Menu.Item>
+      </Menu>
+    ),
+    [currentUser]
+  )
   return (
     <>
       <Row id="header" justify="space-between">

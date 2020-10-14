@@ -179,7 +179,7 @@ function User() {
       <div
         className='ag-theme-alpine'
         style={{
-          height: 'calc(100vh - 5rem)'
+          height: 'calc(100vh - 8rem)'
         }}>
           <Spin spinning={isLoadingGet} />
           <AgGridReact
