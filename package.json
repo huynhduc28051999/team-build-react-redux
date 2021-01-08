@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "ag-grid-community": "^23.2.1",
     "ag-grid-react": "^23.2.1",
-    "antd": "^4.3.5",
+    "antd": "^4.10.0",
     "axios": "^0.19.2",
     "customize-cra": "^1.0.0",
     "moment": "^2.27.0",

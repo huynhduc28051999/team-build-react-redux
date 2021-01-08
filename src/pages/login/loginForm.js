@@ -24,6 +24,7 @@ export default function LoginForm({
   const [form] = Form.useForm()
   const token = useSelector(state => state.auth.token)
   const error = useSelector(state => state.auth.error)
+  const isLoadingAuth = useSelector((state) => state.auth.isLoadingAuth)
   const dispatch = useDispatch()
   const onFinish = values => {
     dispatch(loginContruction(values))
@@ -44,10 +45,10 @@ export default function LoginForm({
         remember: true,
       }}
       onFinish={onFinish}
-      size='large'
+      size="large"
     >
       <Form.Item
-        label="Username"
+        label="Email"
         name="email"
         rules={[
           {
@@ -56,11 +57,11 @@ export default function LoginForm({
           },
         ]}
       >
-        <Input />
+        <Input placeholder="Nhập username" />
       </Form.Item>
 
       <Form.Item
-        label="Password"
+        label="Mật khẩu"
         name="password"
         rules={[
           {
@@ -69,7 +70,7 @@ export default function LoginForm({
           },
         ]}
       >
-        <Input.Password />
+        <Input.Password placeholder="Nhập password" />
       </Form.Item>
 
       <Form.Item {...layout} name="remember" valuePropName="checked">
@@ -77,8 +78,8 @@ export default function LoginForm({
       </Form.Item>
 
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Submit
+        <Button type="primary" htmlType="submit" loading={isLoadingAuth}>
+          Đăng nhập
         </Button>
       </Form.Item>
     </Form>

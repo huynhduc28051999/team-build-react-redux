@@ -116,7 +116,7 @@ export function* getDataUserById(data) {
 
 function updateUser(fromData) {
   const { data } = fromData.payload
-  return axiosClient.post(apiUrl.URL_API_UPDATE_USER, data)
+  return axiosClient.put(apiUrl.URL_API_UPDATE_USER, data)
 }
 
 export function* updateDataUser(data) {

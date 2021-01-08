@@ -5,7 +5,7 @@ import './index.scss'
 export const Loading = () => {
   return (
     <div className='loading'>
-      <Spin size='large' />
+      <Spin size='large' tip='Đang tải ...' />
     </div>
   )
 }

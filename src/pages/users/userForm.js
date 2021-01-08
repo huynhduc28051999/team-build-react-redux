@@ -10,7 +10,6 @@ import {
   Input,
   Avatar,
   Button,
-  Spin,
   DatePicker,
   Radio,
   Select,
@@ -21,6 +20,7 @@ import { addUser, getUserById, updateUser } from '@actions/user'
 import * as moment from 'moment'
 import { getAllPermisson } from '@actions/permission'
 import SeachGroup from './searchGroup'
+import { Loading } from '@components'
 
 const { Option } = Select
 const layout = {
@@ -146,6 +146,7 @@ function UserForm({ drawerRef }) {
       setState({
         requiredPass: false,
       })
+      form.validateFields(['password', 'confirmPassword'])
     }
   }, [])
   return (
@@ -160,7 +161,7 @@ function UserForm({ drawerRef }) {
       style={{ position: 'absolute' }}
     >
       {isLoading ? (
-        <Spin spinning={isLoading} size='large' />
+        <Loading />
       ) : (
           <Form
             form={form}

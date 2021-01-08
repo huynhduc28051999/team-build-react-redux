@@ -1,6 +1,5 @@
 import {
   EditOutlined,
-  LeftOutlined,
   PoweroffOutlined,
   SettingOutlined,
   UserOutlined

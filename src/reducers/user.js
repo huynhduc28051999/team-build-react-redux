@@ -3,7 +3,7 @@ import * as Type from '@constants/actionTypes'
 const initialState = {
   isLoading: false,
   isLoadingGet: false,
-  users: [],
+  users: null,
   error: null,
   isSuccess: false,
   userById: null
@@ -14,6 +14,7 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoadingGet: true,
+        users: null,
         error: null
       }
     }

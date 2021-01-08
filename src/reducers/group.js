@@ -3,7 +3,7 @@ import * as Type from '@constants/actionTypes'
 const initialState = {
   isLoading: false,
   isLoadingGet: false,
-  groups: [],
+  groups: null,
   error: null,
   isSuccess: false,
   groupById: null,

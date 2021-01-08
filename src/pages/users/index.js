@@ -5,7 +5,7 @@ import { AgGridReact } from 'ag-grid-react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllUser, deleteUser } from '@actions/user'
 import AvatarDetail from '@components/avatarDetail'
-import { Button, Spin, Modal } from 'antd'
+import { Button, Modal } from 'antd'
 import UserForm from './userForm'
 import stateReducer from '@components/commonFun/stateReducer'
 
@@ -23,7 +23,6 @@ function User() {
   const gridApi = useRef()
   const drawerRef = useRef()
   const users = useSelector(state => state.user.users)
-  // console.log();
   const isLoadingGet = useSelector(state => state.user.isLoadingGet)
   const dispatch = useDispatch()
   const { showEdit, showDelete } = state
@@ -92,7 +91,7 @@ function User() {
         field: 'group.name'
       },
     ],
-    rowData: users || [],
+    rowData: users,
     defaultColDef: {
       sortable: true,
       resizable: true,
@@ -181,7 +180,6 @@ function User() {
         style={{
           height: 'calc(100vh - 8rem)'
         }}>
-          <Spin spinning={isLoadingGet} />
           <AgGridReact
             floatingFilter
             loading

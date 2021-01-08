@@ -112,7 +112,7 @@ export function* getDataGroupById(data) {
 
 function updateGroup(fromData) {
   const { data } = fromData.payload
-  return axiosClient.post(apiUrl.URL_API_UPDATE_GROUP, data)
+  return axiosClient.put(apiUrl.URL_API_UPDATE_GROUP, data)
 }
 
 export function* updateDataGroup(data) {

@@ -1,29 +1,52 @@
 $color_1: #828282;
 $color_2: cornflowerblue;
 $font_family_1: Nunito Sans;
- 
+
 .wrapper {
-//  background-image: url('../../assets/images/background.png');
+  //  background-image: url('../../assets/images/background.png');
   background: url('../../assets/images/background.jpg');
   background-size: contain;
   background-repeat: round;
   height: 100vh;
   width: 100vw;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   .logo {
-  background: url('../../assets/images/logo.png') no-repeat;
-  background-size: contain;
-    width: 200px;
-    height: 50px;
+    background: url('../../assets/images/logo.png') no-repeat;
+    background-size: contain;
+    min-width: 200px;
+    min-height: 50px;
+  }
+  .image-login {
+    background-image: url('../../assets/images/image-login.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-width: 600px;
+    min-height: 600px;
+  }
+  .wrapper-login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    height: 486px;
+    h1 {
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 28px;
+      text-transform: uppercase;
+      color: #56B8D4;
+      margin: 20px;
+    }
   }
   .ant-form {
-    margin-top: 51px;
+    // margin-top: 51px;
     width: 382px;
     .ant-input {
       background: rgba(255, 255, 255, 0.7);
+      border-radius: 20px;
+      border: 1px solid #56B8D4;
       //  border-radius: 6px;
       //  height: 40px;
       //  padding: 14px 20px;
@@ -38,6 +61,16 @@ $font_family_1: Nunito Sans;
     }
     .ant-btn {
       height: 46px;
+      border-radius: 30px;
+      width: 160px;
+      background-color: #56B8D4;
+    }
+    .ant-input-affix-wrapper-lg {
+      border-radius: 20px;
+      border: 1px solid #56B8D4;
+      .ant-input {
+        border: none;
+      }
     }
   }
   .ant-form-item {
@@ -80,4 +113,3 @@ $font_family_1: Nunito Sans;
     display: none;
   }
 }
-

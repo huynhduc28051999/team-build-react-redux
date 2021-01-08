@@ -8,7 +8,7 @@ const Dashboard = ({ history }) => {
     history.push(path)
   }, [])
   return (
-    <div style={{ height: '100%' }}>
+    <div style={{ height: 'calc(100vh - 5.75rem)' }}>
       <div className='sections-wapper'>
         {menuRoute.map((item, idx) => {
           return (

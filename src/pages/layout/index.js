@@ -30,7 +30,7 @@ const Layout = (props) => {
   return (
     <div
       style={{
-        height: '100vh',
+        height: '100%',
         // backgroundImage: `url`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
@@ -47,10 +47,9 @@ const Layout = (props) => {
         onLogout={onLogout}
       />
       <LayoutAntd className="layout">
-        <Content>
+        <Content className='layout-wapper'>
           <div
             className="site-layout-content"
-            style={{ height: 'calc(100vh - 2.75rem)' }}
           >
             {React.cloneElement(children, {
               me: currentUser,

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import React, { useEffect, useRef, useCallback, useReducer } from 'react'
+import React, { useEffect, useRef, useCallback, useReducer, useMemo } from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllGroup, deleteGroup } from '@actions/group'
@@ -7,6 +7,7 @@ import AvatarDetail from '@components/avatarDetail'
 import { Button, Spin, Modal, Tooltip } from 'antd'
 import GroupForm from './groupForm'
 import stateReducer from '@components/commonFun/stateReducer'
+import { Loading } from '@components'
 
 function Groups(props) {
   const { history } = props
@@ -45,7 +46,7 @@ function Groups(props) {
       window.removeEventListener('resize', handleResize)
     }
   }, [])
-  const gridOptions = {
+  const gridOptions = useMemo(() => ({
     columnDefs: [
       {
         headerName: 'Ảnh nhóm',
@@ -59,6 +60,10 @@ function Groups(props) {
       {
         headerName: 'Tên nhóm',
         field: 'name',
+      },
+      {
+        headerName: 'Tiêu đề',
+        field: 'title',
       },
       {
         headerName: 'Mô tả',
@@ -75,7 +80,6 @@ function Groups(props) {
         filter: 'agNumberColumnFilter',
       },
     ],
-    rowData: groups || [],
     defaultColDef: {
       sortable: true,
       resizable: true,
@@ -131,7 +135,7 @@ function Groups(props) {
     frameworkComponents: {
       avatarRenderer: AvatarDetail,
     },
-  }
+  }), [])
   const hadleOpenDrawer = useCallback(
     (isAdd = true) => {
       const groups = gridApi.current?.getSelectedRows()
@@ -184,8 +188,11 @@ function Groups(props) {
           height: 'calc(100vh - 8rem)',
         }}
       >
-        <Spin spinning={isLoadingGet} />
-        <AgGridReact floatingFilter loading {...gridOptions} />
+          <AgGridReact
+            floatingFilter
+            {...gridOptions} 
+            rowData={groups}
+          />
       </div>
       <GroupForm drawerRef={drawerRef} />
     </div>
