@@ -31,20 +31,29 @@ export const authenticatedRoutes = [
     isExact: true,
     path: '/detailGroup/:_id?',
     component: 'detailGroup'
-  }
+  },
+  {
+    isExact: true,
+    path: '/events',
+    component: 'events',
+  },
 ]
 
 export const menuRoute = [
   {
-    title: 'Hệ thống',
+    title: 'Quản lý',
     childs: [
       {
-        name: 'Groups',
+        name: 'Phòng ban',
         path: '/groups'
       },
       {
-        name: 'Users',
+        name: 'Nhân viên',
         path: '/users'
+      },
+      {
+        name: 'Sự kiện',
+        path: '/events'
       }
     ]
   }
