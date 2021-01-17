@@ -10,3 +10,22 @@
 .rbc-time-view .rbc-allday-cell {
   height: 0px !important;
 }
+.rbc-event {
+  border: 0.5px solid #000000 !important;
+  box-sizing: border-box;
+  box-shadow: none;
+  margin: 0;
+  padding: 2px 5px;
+  background-color: #FDF3E7 !important;
+  border-radius: 2px !important;
+  color: #283848 !important;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+.rbc-today {
+  background-color: white !important;
+}
+.rbc-day-slot .rbc-time-slot {
+  border-top: none !important;
+}

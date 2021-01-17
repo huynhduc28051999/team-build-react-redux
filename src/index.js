@@ -7,9 +7,10 @@ import rootSaga from "./sagas"
 import createSagaMiddleware from 'redux-saga'
 import { createStore, applyMiddleware } from 'redux'
 import { logger } from 'redux-logger'
+import { enableBatching, batchDispatchMiddleware } from 'redux-batched-actions'
 
 const sagaMiddleware = createSagaMiddleware()
-const store = createStore(rootReducer, applyMiddleware(sagaMiddleware, logger))
+const store = createStore(enableBatching(rootReducer), applyMiddleware(sagaMiddleware, logger, batchDispatchMiddleware))
 sagaMiddleware.run(rootSaga)
 ReactDOM.render(
   <Provider store={store}>

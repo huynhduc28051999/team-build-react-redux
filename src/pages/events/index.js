@@ -5,11 +5,14 @@ import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import * as moment from 'moment'
+import { useDispatch, useSelector } from 'react-redux'
+import stateReducer from '@components/commonFun/stateReducer'
+import { batchActions } from 'redux-batched-actions'
+import { getAllGroup } from '@actions/group'
+import { getAllEvent } from '@actions/event'
 import CustomToolbar from './action/toolBar'
 import ModalEvent from './modal/modalEvent'
-import { useDispatch, useSelector } from 'react-redux'
-import { getAllGroup } from '@actions/group'
-import stateReducer from '@components/commonFun/stateReducer'
+import CustomItemEvent from './customItemEvent'
 
 const localizer = momentLocalizer(moment)
 
@@ -41,8 +44,9 @@ function Events() {
   const startDate = useRef(moment().startOf('day').valueOf())
   const endDate = useRef(moment().endOf('day').valueOf())
   const calendarRef = useRef()
-  const selectedViewDateRef = useRef()
+  const selectedViewDateRef = useRef('day')
   const modalEventRef = useRef()
+  const arrEventRef = useRef([])
   const {
     resources
   } = state
@@ -54,18 +58,20 @@ function Events() {
     newData.forEach(i => {
       i.resourceId = i.idGroup
     })
-    const objSetState = {
-      events: newData,
-      resources: undefined
-    }
+    arrEventRef.current = newData
+    let resources
     if (selectedViewDateRef.current === 'day') {
-      objSetState.resources = groups.map(group => ({ id: group._id, title: group.name }))
+      if (groups?.length) {
+        resources = groups.map(group => ({ id: group._id, title: group.name }))
+      }
     }
     if (!isNotSetState) {
-      setState(objSetState)
+      setState({
+        resources
+      })
     }
-    return objSetState
-  }, [events])
+    return { resources }
+  }, [events, groups])
   const setStartDateAndEndDate = useCallback((varStartDate, varEndDate) => {
     startDate.current = varStartDate
     endDate.current = varEndDate
@@ -84,15 +90,20 @@ function Events() {
       />
     )
   }, [])
+  const renderEvent = useCallback(
+    evtProps => props => {
+      return <CustomItemEvent
+        {...props}
+        evtProps={evtProps}
+        selectedViewDateRef={selectedViewDateRef}
+      />
+    },
+    []
+  )
+
   useEffect(() => {
-    dispatch(getAllGroup())
+    dispatch(batchActions([getAllGroup(), getAllEvent()]))
   }, [])
-  useEffect(() => {
-    if (groups?.length) {
-      const resources = groups.map(group => ({ id: group._id, title: group.name }))
-      setState({ resources })
-    }
-  }, [groups])
   useEffect(() => {
     const objSetState = handleChangeTypeView(true)
     setState(objSetState)
@@ -129,24 +140,18 @@ function Events() {
             'dddd DD/MM/YYYY',
             culture
           )} - ${localizer.format(end, 'dddd DD/MM/YYYY', culture)}`, // format khi chon xem 1 tuan
-          // eventTimeRangeFormat: ({ start, end }, culture, localizer) => ( // format lai time cua event
-          //   `${localizer.format(
-          //     start,
-          //     'HH:mm',
-          //     culture
-          //   )} - ${localizer.format(end, 'HH:mm', culture)}`)
           eventTimeRangeFormat: () => null
         }}
         components={{
           toolbar: toolbarFunc,
-          // event: evtProps => renderEvent(evtProps)({
-          //   onSelectEvent,
-          //   // printEvent,
-          //   idSourceStore: props.sourceStore?._id,
-          //   loadGrid,
-          //   gridApi,
-          //   history: props.history
-          // }), // customer cho title cua even chi hien thị khi đủ không gian
+          event: evtProps => renderEvent(evtProps)({
+            // onSelectEvent,
+            // // printEvent,
+            // idSourceStore: props.sourceStore?._id,
+            // loadGrid,
+            // gridApi,
+            // history: props.history
+          }), // customer cho title cua even chi hien thị khi đủ không gian
           // eventWrapper: evtWrapperProps => eventWrapperFunc(evtWrapperProps)({
           //   // printEvent
           //   onSelectEvent,
@@ -166,7 +171,8 @@ function Events() {
             </span>
           )
         }} // customer cac component trong calendar
-        events={events}
+        events={arrEventRef.current}
+        onEventDrop={() => console.log('drop')}
       />
       <ModalEvent
         ref={modalEventRef}

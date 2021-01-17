@@ -24,3 +24,30 @@ export const addEventFail = error => {
     }
   }
 }
+
+
+export const getAllEvent = () => {
+  return {
+    type: type.GET_ALL_EVENT,
+    payload: { }
+  }
+}
+
+export const getAllEventSuccess = data => {
+  return {
+    type: type.GET_ALL_EVENT_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const getAllEventFailed = error => {
+  return {
+    type: type.GET_ALL_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}
+
