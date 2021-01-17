@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import React, { useEffect, useRef, useCallback, useReducer, useMemo } from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import { useSelector, useDispatch } from 'react-redux'
@@ -7,7 +6,6 @@ import AvatarDetail from '@components/avatarDetail'
 import { Button, Spin, Modal, Tooltip } from 'antd'
 import GroupForm from './groupForm'
 import stateReducer from '@components/commonFun/stateReducer'
-import { Loading } from '@components'
 
 function Groups(props) {
   const { history } = props

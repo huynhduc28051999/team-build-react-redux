@@ -2,3 +2,11 @@
   height: calc(100vh - 5.76rem);
   background-color: #fff;
 }
+
+.rbc-time-view .rbc-row {
+  min-height: 0px;
+}
+
+.rbc-time-view .rbc-allday-cell {
+  height: 0px !important;
+}

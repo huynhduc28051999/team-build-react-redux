@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import React, { useEffect, useRef, useCallback, useReducer } from 'react'
 import * as moment from 'moment'
 import { AgGridReact } from 'ag-grid-react'

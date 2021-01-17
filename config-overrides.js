@@ -1,8 +1,7 @@
 const path = require("path");
-const { override, addWebpackAlias, useBabelRc } = require('customize-cra')
+const { override, addWebpackAlias, useBabelRc, useEslintRc } = require('customize-cra')
 
 const resolve = dir => path.resolve(__dirname, dir);
-
 const alias = {
   '@components': resolve('src/components'),
   '@pages': resolve('src/pages'),
@@ -16,5 +15,6 @@ const alias = {
 }
 module.exports = override(
   addWebpackAlias(alias),
-  useBabelRc()
+  useBabelRc(),
+  useEslintRc(path.resolve(__dirname, '.eslintrc'))
 )

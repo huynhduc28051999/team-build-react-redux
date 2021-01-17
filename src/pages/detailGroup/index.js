@@ -70,18 +70,18 @@ const DetailGroup = (props) => {
             </div>
           </div>
           <div className="list-user">
-            <div class="detail-group__container">
+            <div className="detail-group__container">
               <h4>THÀNH VIÊN NHÓM</h4>
               <Row className="list-user_flex">
                 {groupById?.users?.map((item, idx) => (
                   <Col span={6} key={`user_${idx}`}>
-                    <div class="avatar">
+                    <div className="avatar">
                       <img src={item.avatar || AvatarUserDefault} />
                     </div>
                     <h6>{item.name}</h6>
                     <i>{item.email}</i>
-                    <div class="phone">
-                      <i class="fas fa-phone"></i>
+                    <div className="phone">
+                      <i className="fas fa-phone"></i>
                       Tel: {item.phoneNumber}
                     </div>
                   </Col>

@@ -16,11 +16,13 @@
         "react"
     ],
     "rules": {
+        "semi": "off",
         "react/prop-types": "off",
         "react/forbid-prop-types": 0,
         "react-hooks/exhaustive-deps": "off",
         "no-unused-expressions": "off",
-        "react/no-children-prop": "off"
+        "react/no-children-prop": "off",
+        "react/display-name": "off"
     },
     "overrides": [
         {
@@ -30,7 +32,9 @@
                 "react-hooks/exhaustive-deps": "off",
                 "react/prop-types": "off",
                 "react/forbid-prop-types": "off",
-                "react/no-children-prop": "off"
+                "react/no-children-prop": "off",
+                "react/display-name": "off",
+                "semi": "off"
             }
         }
     ]

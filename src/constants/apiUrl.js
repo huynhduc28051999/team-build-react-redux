@@ -20,3 +20,5 @@ export const URL_API_UPDATE_USER = '/user'
 export const URL_API_DELETE_USER = '/user/delete-user'
 
 export const URL_API_GET_PERMISSION = '/permission/permissions'
+
+export const URL_API_ADD_EVENT = '/event'

@@ -50,6 +50,7 @@ $font_family_1: Nunito Sans;
       //  border-radius: 6px;
       //  height: 40px;
       //  padding: 14px 20px;
+      padding-left: 20px;
       &::placeholder {
         font-family: $font_family_1;
         font-size: 13px;
@@ -70,6 +71,7 @@ $font_family_1: Nunito Sans;
       border: 1px solid #56B8D4;
       .ant-input {
         border: none;
+        padding-left: 10px;
       }
     }
   }

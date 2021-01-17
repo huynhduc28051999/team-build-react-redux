@@ -1,10 +1,15 @@
-import React, { useRef } from 'react'
+import React, { useRef, useCallback, useEffect, useReducer } from 'react'
 import './index.scss'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import * as moment from 'moment'
+import CustomToolbar from './action/toolBar'
+import ModalEvent from './modal/modalEvent'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllGroup } from '@actions/group'
+import stateReducer from '@components/commonFun/stateReducer'
 
 const localizer = momentLocalizer(moment)
 
@@ -27,7 +32,71 @@ moment.defineLocale('vi', {
 const DragAndDropCalendar = withDragAndDrop(Calendar)
 
 function Events() {
+  const [state, setState] = useReducer(stateReducer, {
+    resources: undefined
+  })
+  const dispatch = useDispatch()
+  const groups = useSelector(state => state.group.groups)
+  const events = useSelector(state => state.event.events)
+  const startDate = useRef(moment().startOf('day').valueOf())
+  const endDate = useRef(moment().endOf('day').valueOf())
   const calendarRef = useRef()
+  const selectedViewDateRef = useRef()
+  const modalEventRef = useRef()
+  const {
+    resources
+  } = state
+  const setSelectedDateView = useCallback(val => {
+    selectedViewDateRef.current = val
+  }, [])
+  const handleChangeTypeView = useCallback((isNotSetState) => {
+    const newData = events || []
+    newData.forEach(i => {
+      i.resourceId = i.idGroup
+    })
+    const objSetState = {
+      events: newData,
+      resources: undefined
+    }
+    if (selectedViewDateRef.current === 'day') {
+      objSetState.resources = groups.map(group => ({ id: group._id, title: group.name }))
+    }
+    if (!isNotSetState) {
+      setState(objSetState)
+    }
+    return objSetState
+  }, [events])
+  const setStartDateAndEndDate = useCallback((varStartDate, varEndDate) => {
+    startDate.current = varStartDate
+    endDate.current = varEndDate
+  }, [])
+  const handleClickAdd = useCallback(() => {
+    modalEventRef.current?.openModal()
+  }, [])
+  const toolbarFunc = useCallback(toolbarProps => {
+    // const permission = permissionRef.current
+    return (
+      <CustomToolbar
+        {...toolbarProps}
+        setStartDateAndEndDate={setStartDateAndEndDate}
+        handleClickAdd={handleClickAdd}
+        setSelectedDateView={setSelectedDateView}
+      />
+    )
+  }, [])
+  useEffect(() => {
+    dispatch(getAllGroup())
+  }, [])
+  useEffect(() => {
+    if (groups?.length) {
+      const resources = groups.map(group => ({ id: group._id, title: group.name }))
+      setState({ resources })
+    }
+  }, [groups])
+  useEffect(() => {
+    const objSetState = handleChangeTypeView(true)
+    setState(objSetState)
+  }, [events])
   return (
     <div className='event-management'>
       <DragAndDropCalendar
@@ -41,8 +110,9 @@ function Events() {
         step={5} // buoc nhay khi keo chon minute
         timeslots={2} // setting how many slot event in 1 hour
         localizer={localizer} // setting cho moment
-        views={['day', 'week', 'month']}
+        views={['day', 'week', 'month', 'agenda']}
         defaultView='day' // setting default view
+        resources={resources}
         startAccessor={event => {
           return moment(event.date).toDate()
         }} // thay vi co truong start va end trong data thi ham nay se huong ve truong minh chi dinh de hien thi
@@ -68,6 +138,7 @@ function Events() {
           eventTimeRangeFormat: () => null
         }}
         components={{
+          toolbar: toolbarFunc,
           // event: evtProps => renderEvent(evtProps)({
           //   onSelectEvent,
           //   // printEvent,
@@ -84,6 +155,7 @@ function Events() {
           //   handleChangeStateAppointment,
           //   handleTreatmentClick
           // }), // customer cho even
+          // eslint-disable-next-line
           timeGutterHeader: () => (
             // component header cột giờ
             <span
@@ -94,7 +166,10 @@ function Events() {
             </span>
           )
         }} // customer cac component trong calendar
-        events={[]}
+        events={events}
+      />
+      <ModalEvent
+        ref={modalEventRef}
       />
     </div>
   )

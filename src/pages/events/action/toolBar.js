@@ -1,144 +1,155 @@
-import React, { useCallback, useState } from 'react'
-import { Radio, Button, Calendar, Tooltip } from 'antd'
+import React, { useCallback } from 'react'
+import { Radio, Button, DatePicker, Tooltip } from 'antd'
 import * as moment from 'moment'
-// import SelectDoctor from './selectDoctor'
-// import SelectImplementRoom from './selectImplementRoom'
 import './toolbar.scss'
+import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons'
 
-export default React.memo(props => {
-  const { view, label, date } = props
-  const [typeView, setTypeView] = useState('doctor')
+const ToolBar = props => {
+  const {
+    view,
+    label,
+    date,
+    onView,
+    setSelectedDateView,
+    setStartDateAndEndDate,
+    onNavigate,
+    handleClickAdd
+  } = props
   const onChangeView = useCallback(async e => {
-    props.onView(e.target.value)
-    props.setSelectedDateView(e.target.value)
+    onView(e.target.value)
+    setSelectedDateView(e.target.value)
     if (e.target.value === 'day') {
-      props.setStartDateAndEndDate(
+      setStartDateAndEndDate(
         moment(date).startOf('day').valueOf(),
         moment(date).endOf('day').valueOf()
       )
-      await props.loadGrid()
+      // await loadGrid()
     } else if (e.target.value === 'week') {
-      props.setStartDateAndEndDate(
+      setStartDateAndEndDate(
         moment(date).startOf('isoWeek').valueOf(),
         moment(date).endOf('isoWeek').valueOf()
       )
-      await props.loadGrid()
+      // await loadGrid()
     } else {
-      props.setStartDateAndEndDate(
+      setStartDateAndEndDate(
         moment(date).startOf('month').valueOf(),
         moment(date).endOf('month').valueOf()
       )
-      await props.loadGrid()
+      // await loadGrid()
     }
   }, [])
 
   const onClickToday = useCallback(async () => {
-    props.onNavigate('day', moment().toDate())
-    if (props.view === 'day') {
-      props.setStartDateAndEndDate(
+    onNavigate('day', moment().toDate())
+    if (view === 'day') {
+      setStartDateAndEndDate(
         moment().startOf('day').valueOf(),
         moment().endOf('day').valueOf()
       )
-      await props.loadGrid()
-    } else if (props.view === 'week') {
-      props.setStartDateAndEndDate(
+      // await loadGrid()
+    } else if (view === 'week') {
+      setStartDateAndEndDate(
         moment().startOf('isoWeek').valueOf(),
         moment().endOf('isoWeek').valueOf()
       )
-      await props.loadGrid()
+      // await loadGrid()
     } else {
-      props.setStartDateAndEndDate(
+      setStartDateAndEndDate(
         moment().startOf('month').valueOf(),
         moment().endOf('month').valueOf()
       )
-      await props.loadGrid()
+      // await loadGrid()
     }
-  }, [props.view, props.date])
+  }, [view, date])
 
   const onClickOneDay = useCallback(
     type => async () => {
       if (type === 'add') {
-        if (props.view === 'day') {
-          props.onNavigate('DAY', moment(date).add(1, 'days').toDate())
-          props.setStartDateAndEndDate(
+        if (view === 'day') {
+          onNavigate('DAY', moment(date).add(1, 'days').toDate())
+          setStartDateAndEndDate(
             moment(date).add(1, 'days').startOf('day').valueOf(),
             moment(date).add(1, 'days').endOf('day').valueOf()
           )
-          await props.loadGrid()
-        } else if (props.view === 'week') {
-          props.onNavigate('DAY', moment(date).add(7, 'days').toDate())
-          props.setStartDateAndEndDate(
+          // await loadGrid()
+        } else if (view === 'week') {
+          onNavigate('DAY', moment(date).add(7, 'days').toDate())
+          setStartDateAndEndDate(
             moment(date).add(7, 'days').startOf('isoWeek').valueOf(),
             moment(date).add(7, 'days').endOf('isoWeek').valueOf()
           )
-          await props.loadGrid()
+          // await loadGrid()
         } else {
-          props.onNavigate('DAY', moment(date).add(1, 'months').toDate())
-          props.setStartDateAndEndDate(
+          onNavigate('DAY', moment(date).add(1, 'months').toDate())
+          setStartDateAndEndDate(
             moment(date).add(1, 'months').startOf('months').valueOf(),
             moment(date).add(1, 'months').endOf('months').valueOf()
           )
-          await props.loadGrid()
+          // await loadGrid()
         }
-      } else if (props.view === 'day') {
-        props.onNavigate('DAY', moment(date).subtract(1, 'days').toDate())
-        props.setStartDateAndEndDate(
+      } else if (view === 'day') {
+        onNavigate('DAY', moment(date).subtract(1, 'days').toDate())
+        setStartDateAndEndDate(
           moment(date).subtract(1, 'days').startOf('day').valueOf(),
           moment(date).subtract(1, 'days').endOf('day').valueOf()
         )
-        await props.loadGrid()
-      } else if (props.view === 'week') {
-        props.onNavigate('DAY', moment(date).subtract(7, 'days').toDate())
-        props.setStartDateAndEndDate(
+        // await loadGrid()
+      } else if (view === 'week') {
+        onNavigate('DAY', moment(date).subtract(7, 'days').toDate())
+        setStartDateAndEndDate(
           moment(date).subtract(7, 'days').startOf('isoWeek').valueOf(),
           moment(date).subtract(7, 'days').endOf('isoWeek').valueOf()
         )
-        await props.loadGrid()
+        // await loadGrid()
       } else {
-        props.onNavigate('DAY', moment(date).subtract(1, 'months').toDate())
-        props.setStartDateAndEndDate(
+        onNavigate('DAY', moment(date).subtract(1, 'months').toDate())
+        setStartDateAndEndDate(
           moment(date).subtract(1, 'months').startOf('months').valueOf(),
           moment(date).subtract(1, 'months').endOf('months').valueOf()
         )
-        await props.loadGrid()
+        // await loadGrid()
       }
     },
-    [props.date, props.view]
+    [date, view]
   )
 
   const onChangeCalendar = useCallback(
     async varMoment => {
-      if (props.view === 'day') {
-        props.onNavigate('DAY', moment(varMoment.valueOf()).toDate())
-        props.setStartDateAndEndDate(
+      if (view === 'day') {
+        onNavigate('DAY', moment(varMoment.valueOf()).toDate())
+        setStartDateAndEndDate(
           moment(varMoment).startOf('day').valueOf(),
           moment(varMoment).endOf('day').valueOf()
         )
-        await props.loadGrid()
-      } else if (props.view === 'week') {
-        props.onNavigate(
+        // await loadGrid()
+      } else if (view === 'week') {
+        onNavigate(
           'DAY',
           moment(varMoment.valueOf()).startOf('isoWeek').toDate()
         )
-        props.setStartDateAndEndDate(
+        setStartDateAndEndDate(
           moment(varMoment).startOf('isoWeek').valueOf(),
           moment(varMoment).endOf('isoWeek').valueOf()
         )
-        await props.loadGrid()
+        // await loadGrid()
       } else {
-        props.onNavigate(
+        onNavigate(
           'DAY',
           moment(varMoment.valueOf()).startOf('months').toDate()
         )
-        props.setStartDateAndEndDate(
+        setStartDateAndEndDate(
           moment(varMoment).startOf('months').valueOf(),
           moment(varMoment).endOf('months').valueOf()
         )
-        await props.loadGrid()
+        // await loadGrid()
       }
     },
-    [props.view]
+    [view]
   )
+
+  const viewAgenda = useCallback(() => {
+    onView('agenda')
+  }, [])
 
   const renderButtonToday = useCallback(view => {
     if (view === 'day') {
@@ -170,8 +181,9 @@ export default React.memo(props => {
   const renderDatePicker = useCallback(view => {
     if (view === 'day') {
       return (
-        <Calendar.DatePicker
+        <DatePicker
           onChange={onChangeCalendar}
+          allowClear={false}
           className='calendarToolBarAppointment'
           style={{ maxWidth: 30 }}
           value={moment(date)}
@@ -180,7 +192,9 @@ export default React.memo(props => {
     }
     if (view === 'week') {
       return (
-        <Calendar.WeekPicker
+        <DatePicker
+          picker="week"
+          allowClear={false}
           onChange={onChangeCalendar}
           className='calendarToolBarAppointment'
           style={{ maxWidth: 30 }}
@@ -189,7 +203,9 @@ export default React.memo(props => {
       )
     }
     return (
-      <Calendar.MonthPicker
+      <DatePicker
+        picker="month"
+        allowClear={false}
         onChange={onChangeCalendar}
         className='calendarToolBarAppointment'
         style={{ maxWidth: 30 }}
@@ -198,14 +214,9 @@ export default React.memo(props => {
     )
   }, [])
 
-  const handleChangeTypeView = useCallback(e => {
-    setTypeView(e.target.value)
-    props.handleChangeTypeView(e.target.value)
-  }, [])
-
   return (
     <div style={{ marginBottom: 15, display: 'flex', alignItems: 'center' }}>
-      <Radio.Group value={view} onChange={onChangeView}>
+      <Radio.Group value={view} onChange={onChangeView} size="small">
         <Tooltip title='Xem theo ngày'>
           <Radio.Button value='day'>Ngày</Radio.Button>
         </Tooltip>
@@ -217,66 +228,39 @@ export default React.memo(props => {
         </Tooltip>
       </Radio.Group>
       <Tooltip title='Chọn nhanh'>
-        <Button noFill onClick={onClickToday}>
+        <Button size="small" noFill onClick={onClickToday}>
           {renderButtonToday(view)}
         </Button>
       </Tooltip>
 
       <Tooltip title={renderFastPreviosButton(view)}>
-        <Button
-          iconName='close-command-field'
-          noFill
-          onClick={onClickOneDay('subtract')}
-        />
+      <DoubleLeftOutlined
+        onClick={onClickOneDay('subtract')}
+        style={{ marginLeft: 5, marginRight: 5}}
+      />
       </Tooltip>
       {label}
       {renderDatePicker(view)}
       <Tooltip title={renderFastAddButton(view)}>
-        <Button
-          iconName='open-command-field'
-          noFill
-          onClick={onClickOneDay('add')}
-        />
+      <DoubleRightOutlined
+        onClick={onClickOneDay('add')}
+        style={{ marginLeft: 5, marginRight: 5}}
+      />
       </Tooltip>
-      {
-        props.isEdit && (
-          <Radio.Group
-            value={typeView}
-            onChange={handleChangeTypeView}
-            style={{ marginRight: 2 }}
-          >
-            <Tooltip title='Bác sĩ'>
-              <Radio.Button value='doctor'>Bác sĩ</Radio.Button>
-            </Tooltip>
-            <Tooltip title='Phòng'>
-              <Radio.Button value='implementRoom'>Ghế nha</Radio.Button>
-            </Tooltip>
-          </Radio.Group>
-        )
-      }
-      {/* {typeView === 'doctor' ? (
-        <>
-          <span>Bác sĩ:</span>
-          <SelectDoctor
-            onChangeDoctor={props.onChangeDoctor}
-            selectedDoctor={props.selectedDoctor}
-          />
-        </>
-      ) : (
-        <>
-          <span>Phòng:</span>
-          <SelectImplementRoom setImplementRoom={props.setImplementRoom} />
-        </>
-      )} */}
-      {props.isCreate && (
-        <div style={{ marginLeft: 'auto' }}>
-          <Tooltip title='Thêm lịch hẹn mới'>
-            <Button noFill onClick={props.handleClickAdd}>
-              Tạo mới lịch hẹn
-            </Button>
-          </Tooltip>
-        </div>
-      )}
+      <div style={{ marginLeft: 'auto' }}>
+        <Tooltip title='Xem dưới dạng danh sách'>
+          <Button size="small" noFill onClick={viewAgenda}>
+            Xem dạng danh sách
+          </Button>
+        </Tooltip>
+        <Tooltip title='Thêm lịch hẹn mới'>
+          <Button size="small" noFill onClick={handleClickAdd}>
+            Tạo mới lịch hẹn
+          </Button>
+        </Tooltip>
+      </div>
     </div>
   )
-})
+}
+
+export default React.memo(ToolBar)
