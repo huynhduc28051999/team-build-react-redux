@@ -51,3 +51,12 @@ export const getAllEventFailed = error => {
   }
 }
 
+export const getEventByRangeDate = ({ startDate, endDate }) => {
+  return {
+    type: type.GET_EVENT_BY_RANGE_DATE,
+    payload: {
+      startDate,
+      endDate
+    }
+  }
+}

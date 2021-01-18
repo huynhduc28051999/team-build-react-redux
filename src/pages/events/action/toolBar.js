@@ -13,7 +13,8 @@ const ToolBar = props => {
     setSelectedDateView,
     setStartDateAndEndDate,
     onNavigate,
-    handleClickAdd
+    handleClickAdd,
+    loadDataEvent
   } = props
   const onChangeView = useCallback(async e => {
     onView(e.target.value)
@@ -23,20 +24,18 @@ const ToolBar = props => {
         moment(date).startOf('day').valueOf(),
         moment(date).endOf('day').valueOf()
       )
-      // await loadGrid()
     } else if (e.target.value === 'week') {
       setStartDateAndEndDate(
         moment(date).startOf('isoWeek').valueOf(),
         moment(date).endOf('isoWeek').valueOf()
       )
-      // await loadGrid()
     } else {
       setStartDateAndEndDate(
         moment(date).startOf('month').valueOf(),
         moment(date).endOf('month').valueOf()
       )
-      // await loadGrid()
     }
+    loadDataEvent()
   }, [])
 
   const onClickToday = useCallback(async () => {
@@ -46,20 +45,18 @@ const ToolBar = props => {
         moment().startOf('day').valueOf(),
         moment().endOf('day').valueOf()
       )
-      // await loadGrid()
     } else if (view === 'week') {
       setStartDateAndEndDate(
         moment().startOf('isoWeek').valueOf(),
         moment().endOf('isoWeek').valueOf()
       )
-      // await loadGrid()
     } else {
       setStartDateAndEndDate(
         moment().startOf('month').valueOf(),
         moment().endOf('month').valueOf()
       )
-      // await loadGrid()
     }
+    loadDataEvent()
   }, [view, date])
 
   const onClickOneDay = useCallback(
@@ -71,21 +68,18 @@ const ToolBar = props => {
             moment(date).add(1, 'days').startOf('day').valueOf(),
             moment(date).add(1, 'days').endOf('day').valueOf()
           )
-          // await loadGrid()
         } else if (view === 'week') {
           onNavigate('DAY', moment(date).add(7, 'days').toDate())
           setStartDateAndEndDate(
             moment(date).add(7, 'days').startOf('isoWeek').valueOf(),
             moment(date).add(7, 'days').endOf('isoWeek').valueOf()
           )
-          // await loadGrid()
         } else {
           onNavigate('DAY', moment(date).add(1, 'months').toDate())
           setStartDateAndEndDate(
             moment(date).add(1, 'months').startOf('months').valueOf(),
             moment(date).add(1, 'months').endOf('months').valueOf()
           )
-          // await loadGrid()
         }
       } else if (view === 'day') {
         onNavigate('DAY', moment(date).subtract(1, 'days').toDate())
@@ -93,22 +87,20 @@ const ToolBar = props => {
           moment(date).subtract(1, 'days').startOf('day').valueOf(),
           moment(date).subtract(1, 'days').endOf('day').valueOf()
         )
-        // await loadGrid()
       } else if (view === 'week') {
         onNavigate('DAY', moment(date).subtract(7, 'days').toDate())
         setStartDateAndEndDate(
           moment(date).subtract(7, 'days').startOf('isoWeek').valueOf(),
           moment(date).subtract(7, 'days').endOf('isoWeek').valueOf()
         )
-        // await loadGrid()
       } else {
         onNavigate('DAY', moment(date).subtract(1, 'months').toDate())
         setStartDateAndEndDate(
           moment(date).subtract(1, 'months').startOf('months').valueOf(),
           moment(date).subtract(1, 'months').endOf('months').valueOf()
         )
-        // await loadGrid()
       }
+      loadDataEvent()
     },
     [date, view]
   )
@@ -121,7 +113,6 @@ const ToolBar = props => {
           moment(varMoment).startOf('day').valueOf(),
           moment(varMoment).endOf('day').valueOf()
         )
-        // await loadGrid()
       } else if (view === 'week') {
         onNavigate(
           'DAY',
@@ -131,7 +122,6 @@ const ToolBar = props => {
           moment(varMoment).startOf('isoWeek').valueOf(),
           moment(varMoment).endOf('isoWeek').valueOf()
         )
-        // await loadGrid()
       } else {
         onNavigate(
           'DAY',
@@ -141,8 +131,8 @@ const ToolBar = props => {
           moment(varMoment).startOf('months').valueOf(),
           moment(varMoment).endOf('months').valueOf()
         )
-        // await loadGrid()
       }
+      loadDataEvent()
     },
     [view]
   )
@@ -228,7 +218,7 @@ const ToolBar = props => {
         </Tooltip>
       </Radio.Group>
       <Tooltip title='Chọn nhanh'>
-        <Button size="small" noFill onClick={onClickToday}>
+        <Button size="small" type="text" onClick={onClickToday}>
           {renderButtonToday(view)}
         </Button>
       </Tooltip>
@@ -249,12 +239,12 @@ const ToolBar = props => {
       </Tooltip>
       <div style={{ marginLeft: 'auto' }}>
         <Tooltip title='Xem dưới dạng danh sách'>
-          <Button size="small" noFill onClick={viewAgenda}>
+          <Button size="small" type="text" onClick={viewAgenda}>
             Xem dạng danh sách
           </Button>
         </Tooltip>
         <Tooltip title='Thêm lịch hẹn mới'>
-          <Button size="small" noFill onClick={handleClickAdd}>
+          <Button size="small" type="text" onClick={handleClickAdd}>
             Tạo mới lịch hẹn
           </Button>
         </Tooltip>

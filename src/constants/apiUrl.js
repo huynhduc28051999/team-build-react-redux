@@ -23,3 +23,4 @@ export const URL_API_GET_PERMISSION = '/permission/permissions'
 
 export const URL_API_ADD_EVENT = '/event'
 export const URL_API_GET_ALL_EVENT = '/event/get-all-event'
+export const URL_API_GET_EVENT_BY_RANGE_DATE = '/event/get-event-by-range-date'

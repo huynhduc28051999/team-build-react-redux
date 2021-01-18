@@ -12,7 +12,15 @@ const eventReducer = (state = initialState, action) => {
     case Type.GET_ALL_EVENT: {
       return {
         ...state,
-        isLoadingGet: true
+        isLoadingGet: true,
+        error: null
+      }
+    }
+    case Type.GET_EVENT_BY_RANGE_DATE: {
+      return {
+        ...state,
+        isLoadingGet: true,
+        error: null
       }
     }
     case Type.GET_ALL_EVENT_SUCCESS: {

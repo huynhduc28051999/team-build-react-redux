@@ -3,6 +3,11 @@ import * as moment from 'moment'
 import './customItemEvent.scss'
 import { Avatar } from 'antd'
 
+const objState = {
+  PROCESSING: 'Đang diễn ra',
+  APPROVED: 'Đã hoàn thành'
+}
+
 const CustomItemEvent = props => {
   return (
     <div id={props.evtProps.event._id}>
@@ -15,6 +20,7 @@ const CustomItemEvent = props => {
             <>
               <p>Thời gian bắt đầu: {moment(props?.evtProps.event?.date).format('HH:mm')}</p>
               <p>Mô tả sự kiện: {props?.evtProps.event?.description}</p>
+              <p>Trạng thái: {objState[props?.evtProps.event?.state]}</p>
             </>
           ) : (<br />)}
         </span>

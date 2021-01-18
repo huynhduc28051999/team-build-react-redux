@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import stateReducer from '@components/commonFun/stateReducer'
 import { batchActions } from 'redux-batched-actions'
 import { getAllGroup } from '@actions/group'
-import { getAllEvent } from '@actions/event'
+import { getEventByRangeDate } from '@actions/event'
 import CustomToolbar from './action/toolBar'
 import ModalEvent from './modal/modalEvent'
 import CustomItemEvent from './customItemEvent'
@@ -79,6 +79,14 @@ function Events() {
   const handleClickAdd = useCallback(() => {
     modalEventRef.current?.openModal()
   }, [])
+  const loadDataEvent = useCallback(() => {
+    dispatch(
+      getEventByRangeDate({
+        startDate: startDate.current,
+        endDate: endDate.current
+      })
+    )
+  }, [])
   const toolbarFunc = useCallback(toolbarProps => {
     // const permission = permissionRef.current
     return (
@@ -87,6 +95,7 @@ function Events() {
         setStartDateAndEndDate={setStartDateAndEndDate}
         handleClickAdd={handleClickAdd}
         setSelectedDateView={setSelectedDateView}
+        loadDataEvent={loadDataEvent}
       />
     )
   }, [])
@@ -100,14 +109,19 @@ function Events() {
     },
     []
   )
-
   useEffect(() => {
-    dispatch(batchActions([getAllGroup(), getAllEvent()]))
+    dispatch(batchActions([
+      getAllGroup(),
+      getEventByRangeDate({
+        startDate: startDate.current,
+        endDate: endDate.current
+      })
+    ]))
   }, [])
   useEffect(() => {
     const objSetState = handleChangeTypeView(true)
     setState(objSetState)
-  }, [events])
+  }, [events, groups])
   return (
     <div className='event-management'>
       <DragAndDropCalendar
@@ -171,7 +185,7 @@ function Events() {
             </span>
           )
         }} // customer cac component trong calendar
-        events={arrEventRef.current}
+        events={arrEventRef.current || []}
         onEventDrop={() => console.log('drop')}
       />
       <ModalEvent

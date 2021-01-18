@@ -37,6 +37,44 @@ export function* getDataAllEvent() {
   }
 }
 
+function getEventByRangeDate(fromData) {
+  const { startDate, endDate } = fromData.payload
+  return axiosClient.get(apiUrl.URL_API_GET_EVENT_BY_RANGE_DATE, {
+    params: {
+      startDate,
+      endDate
+    }
+  })
+}
+export function* getDataByRangeDate(fromData) {
+  try {
+    const response = yield call(getEventByRangeDate, fromData)
+    const { data } = response
+    if (data) {
+      yield put(event.getAllEventSuccess(data))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Lấy dữ liệu sự kiện thành công!'
+      })
+    } else {
+      yield put(event.getAllEventFailed(data))
+      OpenNotification({
+        type: 'error',
+        description: data,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(event.getAllEventFailed(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
 function addEvent(fromData) {
   const { input } = fromData.payload
   return axiosClient.post(apiUrl.URL_API_ADD_EVENT, input)
@@ -74,4 +112,5 @@ export function* addDataEvent(data) {
 export function* actionEvent() {
   yield takeEvery(type.ADD_EVENT, addDataEvent)
   yield takeEvery(type.GET_ALL_EVENT, getDataAllEvent)
+  yield takeEvery(type.GET_EVENT_BY_RANGE_DATE, getDataByRangeDate)
 }
