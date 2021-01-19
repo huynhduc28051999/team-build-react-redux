@@ -14,7 +14,8 @@ const ToolBar = props => {
     setStartDateAndEndDate,
     onNavigate,
     handleClickAdd,
-    loadDataEvent
+    loadDataEvent,
+    toggleShowList
   } = props
   const onChangeView = useCallback(async e => {
     onView(e.target.value)
@@ -239,8 +240,8 @@ const ToolBar = props => {
       </Tooltip>
       <div style={{ marginLeft: 'auto' }}>
         <Tooltip title='Xem dưới dạng danh sách'>
-          <Button size="small" type="text" onClick={viewAgenda}>
-            Xem dạng danh sách
+          <Button size="small" type="text" onClick={toggleShowList}>
+            Lịch sử sự kiện
           </Button>
         </Tooltip>
         <Tooltip title='Thêm lịch hẹn mới'>

@@ -25,7 +25,6 @@ export const addEventFail = error => {
   }
 }
 
-
 export const getAllEvent = () => {
   return {
     type: type.GET_ALL_EVENT,
@@ -57,6 +56,32 @@ export const getEventByRangeDate = ({ startDate, endDate }) => {
     payload: {
       startDate,
       endDate
+    }
+  }
+}
+
+
+export const getEventHistory = ({ idEvent }) => {
+  return {
+    type: type.GET_EVENT_HISTORY,
+    payload: { idEvent }
+  }
+}
+
+export const getEventHistorySuccess = data => {
+  return {
+    type: type.GET_EVENT_HISTORY_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const getEventHistoryFailed = error => {
+  return {
+    type: type.GET_EVENT_HISTORY_FAIL,
+    payload: {
+      error
     }
   }
 }

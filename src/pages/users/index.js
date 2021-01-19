@@ -100,10 +100,10 @@ function User() {
     rowSelection: 'multiple', // single
     onGridReady: (params) => {
       gridApi.current = params.api
-      // params.api.sizeColumnsToFit()
+      params.api.sizeColumnsToFit()
     },
     onFirstDataRendered: (params) => {
-      // params.api.sizeColumnsToFit()
+      params.api.sizeColumnsToFit()
     },
     onRowClicked: (params) => {
       const row = params.api.getSelectedRows()

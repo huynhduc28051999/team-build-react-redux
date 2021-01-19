@@ -13,6 +13,7 @@ import { getEventByRangeDate } from '@actions/event'
 import CustomToolbar from './action/toolBar'
 import ModalEvent from './modal/modalEvent'
 import CustomItemEvent from './customItemEvent'
+import EventGrid from './eventGrid'
 
 const localizer = momentLocalizer(moment)
 
@@ -36,7 +37,8 @@ const DragAndDropCalendar = withDragAndDrop(Calendar)
 
 function Events() {
   const [state, setState] = useReducer(stateReducer, {
-    resources: undefined
+    resources: undefined,
+    showList: false
   })
   const dispatch = useDispatch()
   const groups = useSelector(state => state.group.groups)
@@ -48,7 +50,8 @@ function Events() {
   const modalEventRef = useRef()
   const arrEventRef = useRef([])
   const {
-    resources
+    resources,
+    showList
   } = state
   const setSelectedDateView = useCallback(val => {
     selectedViewDateRef.current = val
@@ -87,6 +90,13 @@ function Events() {
       })
     )
   }, [])
+
+  const toggleShowList = useCallback(() => {
+    setState({
+      showList: !showList
+    })
+  }, [showList])
+
   const toolbarFunc = useCallback(toolbarProps => {
     // const permission = permissionRef.current
     return (
@@ -96,6 +106,7 @@ function Events() {
         handleClickAdd={handleClickAdd}
         setSelectedDateView={setSelectedDateView}
         loadDataEvent={loadDataEvent}
+        toggleShowList={toggleShowList}
       />
     )
   }, [])
@@ -124,70 +135,74 @@ function Events() {
   }, [events, groups])
   return (
     <div className='event-management'>
-      <DragAndDropCalendar
-        popup
-        ref={calendarRef}
-        selectable
-        culture='vi'
-        min={new Date(1570667400000)} // tgian bat dau
-        max={new Date(1570710600000)}
-        scrollToTime={new Date(1570690600000)}
-        step={5} // buoc nhay khi keo chon minute
-        timeslots={2} // setting how many slot event in 1 hour
-        localizer={localizer} // setting cho moment
-        views={['day', 'week', 'month', 'agenda']}
-        defaultView='day' // setting default view
-        resources={resources}
-        startAccessor={event => {
-          return moment(event.date).toDate()
-        }} // thay vi co truong start va end trong data thi ham nay se huong ve truong minh chi dinh de hien thi
-        endAccessor={event => {
-          return moment(event.endTime).toDate()
-        }} // thay vi co truong start va end trong data thi ham nay se huong ve truong minh chi dinh de hien thi
-        formats={{
-          // format các khung của calendar
-          dayFormat: (date, culture, localizer) => localizer.format(date, 'dddd - DD/MM', culture), // format cho header ngang cua calendar
-          timeGutterFormat: 'HH:mm', // fomat time line doc
-          dayHeaderFormat: (date, culture, localizer) => localizer.format(date, 'dddd DD/MM/YYYY ', culture), // format cho khi chon xem 1 ngay
-          dayRangeHeaderFormat: ({ start, end }, culture, localizer) => `${localizer.format(
-            start,
-            'dddd DD/MM/YYYY',
-            culture
-          )} - ${localizer.format(end, 'dddd DD/MM/YYYY', culture)}`, // format khi chon xem 1 tuan
-          eventTimeRangeFormat: () => null
-        }}
-        components={{
-          toolbar: toolbarFunc,
-          event: evtProps => renderEvent(evtProps)({
-            // onSelectEvent,
-            // // printEvent,
-            // idSourceStore: props.sourceStore?._id,
-            // loadGrid,
-            // gridApi,
-            // history: props.history
-          }), // customer cho title cua even chi hien thị khi đủ không gian
-          // eventWrapper: evtWrapperProps => eventWrapperFunc(evtWrapperProps)({
-          //   // printEvent
-          //   onSelectEvent,
-          //   handleClickAdd,
-          //   handleDeleteAppointment,
-          //   handleChangeStateAppointment,
-          //   handleTreatmentClick
-          // }), // customer cho even
-          // eslint-disable-next-line
-          timeGutterHeader: () => (
-            // component header cột giờ
-            <span
-              className='rbc-header'
-              style={{ borderBottom: 'none' }}
-            >
-              Giờ
-            </span>
-          )
-        }} // customer cac component trong calendar
-        events={arrEventRef.current || []}
-        onEventDrop={() => console.log('drop')}
-      />
+      {showList ? (
+        <EventGrid toggleShowList={toggleShowList} />
+      ) : (
+          <DragAndDropCalendar
+          popup
+          ref={calendarRef}
+          selectable
+          culture='vi'
+          min={new Date(1570667400000)} // tgian bat dau
+          max={new Date(1570710600000)}
+          scrollToTime={new Date(1570690600000)}
+          step={5} // buoc nhay khi keo chon minute
+          timeslots={2} // setting how many slot event in 1 hour
+          localizer={localizer} // setting cho moment
+          views={['day', 'week', 'month']}
+          defaultView='day' // setting default view
+          resources={resources}
+          startAccessor={event => {
+            return moment(event.date).toDate()
+          }} // thay vi co truong start va end trong data thi ham nay se huong ve truong minh chi dinh de hien thi
+          endAccessor={event => {
+            return moment(event.endTime).toDate()
+          }} // thay vi co truong start va end trong data thi ham nay se huong ve truong minh chi dinh de hien thi
+          formats={{
+            // format các khung của calendar
+            dayFormat: (date, culture, localizer) => localizer.format(date, 'dddd - DD/MM', culture), // format cho header ngang cua calendar
+            timeGutterFormat: 'HH:mm', // fomat time line doc
+            dayHeaderFormat: (date, culture, localizer) => localizer.format(date, 'dddd DD/MM/YYYY ', culture), // format cho khi chon xem 1 ngay
+            dayRangeHeaderFormat: ({ start, end }, culture, localizer) => `${localizer.format(
+              start,
+              'dddd DD/MM/YYYY',
+              culture
+            )} - ${localizer.format(end, 'dddd DD/MM/YYYY', culture)}`, // format khi chon xem 1 tuan
+            eventTimeRangeFormat: () => null
+          }}
+          components={{
+            toolbar: toolbarFunc,
+            event: evtProps => renderEvent(evtProps)({
+              // onSelectEvent,
+              // // printEvent,
+              // idSourceStore: props.sourceStore?._id,
+              // loadGrid,
+              // gridApi,
+              // history: props.history
+            }), // customer cho title cua even chi hien thị khi đủ không gian
+            // eventWrapper: evtWrapperProps => eventWrapperFunc(evtWrapperProps)({
+            //   // printEvent
+            //   onSelectEvent,
+            //   handleClickAdd,
+            //   handleDeleteAppointment,
+            //   handleChangeStateAppointment,
+            //   handleTreatmentClick
+            // }), // customer cho even
+            // eslint-disable-next-line
+            timeGutterHeader: () => (
+              // component header cột giờ
+              <span
+                className='rbc-header'
+                style={{ borderBottom: 'none' }}
+              >
+                Giờ
+              </span>
+            )
+          }} // customer cac component trong calendar
+          events={arrEventRef.current || []}
+          onEventDrop={() => console.log('drop')}
+        />
+      )}
       <ModalEvent
         ref={modalEventRef}
       />

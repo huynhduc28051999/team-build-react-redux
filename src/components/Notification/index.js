@@ -4,7 +4,7 @@ export const OpenNotification = ({ type, description, title}) => {
   switch (type) {
     case 'success':
       notification.success({
-        placement: 'topRight',
+        placement: 'bottomRight',
         description,
         message: title,
         duration: 1.5
@@ -13,7 +13,7 @@ export const OpenNotification = ({ type, description, title}) => {
     
     case 'error':
       notification.error({
-        placement: 'topRight',
+        placement: 'bottomRight',
         description,
         message: title,
         duration: 1.5

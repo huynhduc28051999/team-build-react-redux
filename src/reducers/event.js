@@ -5,7 +5,8 @@ const initialState = {
   error: null,
   isSuccess: false,
   isLoading: false,
-  isLoadingGet: false
+  isLoadingGet: false,
+  eventHistory: []
 }
 const eventReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -60,6 +61,28 @@ const eventReducer = (state = initialState, action) => {
         ...state,
         error: error,
         isLoading: false
+      }
+    }
+    case Type.GET_EVENT_HISTORY: {
+      return {
+        ...state,
+        error: null,
+        eventHistory: []
+      }
+    }
+    
+    case Type.GET_EVENT_HISTORY_SUCCESS: {
+      const { data } = action.payload
+      return {
+        ...state,
+        eventHistory: data
+      }
+    }
+    case Type.GET_EVENT_HISTORY_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        error: error
       }
     }
     default: {

@@ -22,6 +22,7 @@ const ModalEvent = forwardRef((_, ref) => {
   } = state
 
   const openModal = useCallback((value) => {
+    form.resetFields()
     setState({
       visible: true,
       event: value
@@ -115,7 +116,7 @@ const ModalEvent = forwardRef((_, ref) => {
             }
           ]}
         >
-          <Input placeholder='Nhập mô tả sự kiện' />
+          <Input placeholder='Nhập Link ảnh đại diện' />
         </Form.Item>
         <Row>
           <Col span={12}>
