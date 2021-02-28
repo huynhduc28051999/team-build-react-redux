@@ -144,9 +144,44 @@ export function* getDataEventHistory(fromData) {
   }
 }
 
+function updateEvent(fromData) {
+  const { _id, input } = fromData.payload
+  return axiosClient.put(apiUrl.URL_API_UPDATE_EVENT, { _id, input })
+}
+export function* updateDataEvent(data) {
+  try {
+    const response = yield call(updateEvent, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(event.getAllEvent())
+      yield put(event.updateEventSucces(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Chỉnh sửa sự kiện thành công !'
+      })
+    } else {
+      yield put(event.updateEventFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+    yield put(event.updateEventFail(error))
+  }
+}
+
 export function* actionEvent() {
   yield takeEvery(type.ADD_EVENT, addDataEvent)
   yield takeEvery(type.GET_ALL_EVENT, getDataAllEvent)
   yield takeEvery(type.GET_EVENT_BY_RANGE_DATE, getDataByRangeDate)
   yield takeEvery(type.GET_EVENT_HISTORY, getDataEventHistory)
+  yield takeEvery(type.UPDATE_EVENT, updateDataEvent)
 }

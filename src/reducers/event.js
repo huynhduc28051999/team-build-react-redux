@@ -85,6 +85,29 @@ const eventReducer = (state = initialState, action) => {
         error: error
       }
     }
+    case Type.UPDATE_EVENT: {
+      return {
+        ...state,
+        isLoading: true,
+        isSuccess: false,
+        error: null
+      }
+    }
+    case Type.UPDATE_EVENT_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        isSuccess: true
+      }
+    }
+    case Type.UPDATE_EVENT_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        error: error,
+        isLoading: false
+      }
+    }
     default: {
       return state
     }

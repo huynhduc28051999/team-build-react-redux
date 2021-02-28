@@ -4,7 +4,7 @@ import stateReducer from '@components/commonFun/stateReducer'
 import * as moment from 'moment'
 import SearchGroup from './searchGroup'
 import { useDispatch, useSelector } from 'react-redux'
-import { addEvent } from '@actions/event'
+import { addEvent, updateEvent } from '@actions/event'
 
 const ModalEvent = forwardRef((_, ref) => {
   const dispatch = useDispatch()
@@ -27,17 +27,34 @@ const ModalEvent = forwardRef((_, ref) => {
       visible: true,
       event: value
     })
+    console.log(value);
+    form.setFieldsValue({
+      ...value,
+      date: value?.date ? moment(value.date) : moment()
+    })
   }, [])
   const onOk = useCallback(() => {
     form.validateFields().then(values => {
-      dispatch(
-        addEvent({
-          ...values,
-          date: moment(values.date).valueOf()
-        })
-      )
+      if (event?._id) {
+        dispatch(
+          updateEvent({
+            _id: event._id,
+            input: {
+              ...values,
+              date: moment(values.date).valueOf()
+            }
+          })
+        )
+      } else {
+        dispatch(
+          addEvent({
+            ...values,
+            date: moment(values.date).valueOf()
+          })
+        )
+      }
     })
-  }, [])
+  }, [event])
   useImperativeHandle(ref, () => ({
     openModal
   }))
@@ -123,6 +140,12 @@ const ModalEvent = forwardRef((_, ref) => {
             <Form.Item
               name='date'
               label='Thời gian bắt đầu'
+              rules={[
+                {
+                  required: true,
+                  message: 'Thời gian bắt đầu không được để trống'
+                }
+              ]}
             >
               <DatePicker allowClear={false} showTime placeholder='Thời gian bắt đầu' />
             </Form.Item>
@@ -131,8 +154,14 @@ const ModalEvent = forwardRef((_, ref) => {
             <Form.Item
               name='duration'
               label='Thời lượng (Phút)'
+              rules={[
+                {
+                  required: true,
+                  message: 'Thời lượng không được để trống'
+                }
+              ]}
             >
-              <InputNumber style={{ width: '100%' }} placeholder='Nhập thời lượng' />
+              <InputNumber style={{ width: '100%' }} placeholder='Nhập thời lượng' min={10} />
             </Form.Item>
           </Col>
         </Row>

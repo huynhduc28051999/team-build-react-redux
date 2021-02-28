@@ -85,3 +85,29 @@ export const getEventHistoryFailed = error => {
     }
   }
 }
+
+export const updateEvent = ({ _id, input }) => {
+  return {
+    type: type.UPDATE_EVENT,
+    payload: {
+      _id,
+      input
+    }
+  }
+}
+
+export const updateEventSucces = () => {
+  return {
+    type: type.UPDATE_EVENT_SUCCESS,
+    payload: {}
+  }
+}
+
+export const updateEventFail = error => {
+  return {
+    type: type.UPDATE_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}
