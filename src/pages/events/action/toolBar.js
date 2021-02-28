@@ -244,9 +244,9 @@ const ToolBar = props => {
             Lịch sử sự kiện
           </Button>
         </Tooltip>
-        <Tooltip title='Thêm lịch hẹn mới'>
+        <Tooltip title='Thêm sự kiện mới'>
           <Button size="small" type="text" onClick={handleClickAdd}>
-            Tạo mới lịch hẹn
+            Tạo mới sự kiện
           </Button>
         </Tooltip>
       </div>

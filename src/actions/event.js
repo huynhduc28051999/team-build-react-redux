@@ -136,3 +136,78 @@ export const deleteEventFail = error => {
     }
   }
 }
+
+export const completeEvent = ({ _id }) => {
+  return {
+    type: type.COMPLETE_EVENT,
+    payload: {
+      _id
+    }
+  }
+}
+
+export const completeEventSucces = () => {
+  return {
+    type: type.COMPLETE_EVENT_SUCCESS,
+    payload: {}
+  }
+}
+
+export const completeEventFail = error => {
+  return {
+    type: type.COMPLETE_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}
+
+export const cancelEvent = ({ _id }) => {
+  return {
+    type: type.CANCEL_EVENT,
+    payload: {
+      _id
+    }
+  }
+}
+
+export const cancelEventSucces = () => {
+  return {
+    type: type.CANCEL_EVENT_SUCCESS,
+    payload: {}
+  }
+}
+
+export const cancelEventFail = error => {
+  return {
+    type: type.CANCEL_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}
+
+export const reopenEvent = ({ _id }) => {
+  return {
+    type: type.REOPEN_EVENT,
+    payload: {
+      _id
+    }
+  }
+}
+
+export const reopenEventSucces = () => {
+  return {
+    type: type.REOPEN_EVENT_SUCCESS,
+    payload: {}
+  }
+}
+
+export const reopenEventFail = error => {
+  return {
+    type: type.REOPEN_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}

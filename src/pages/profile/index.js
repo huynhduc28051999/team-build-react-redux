@@ -67,7 +67,7 @@ function Profile(props) {
       {!me._id ? (
         <Loading />
       ) : (
-
+        <div style={{ padding: 15 }}>
           <Form form={form} {...layout} name='form-user' onFinish={onFinish}>
             <Form.Item name='name' label='Tên' rules={[{ required: true }]}>
               <Input placeholder='Nhập tên muốn hiển thị' />
@@ -118,6 +118,7 @@ function Profile(props) {
           </Button>
             </Form.Item>
           </Form>
+        </div>
         )}
     </>
   )

@@ -212,6 +212,107 @@ export function* deleteDataEvent(data) {
   }
 }
 
+function completeEvent(fromData) {
+  const { _id } = fromData.payload
+  return axiosClient.post(apiUrl.URL_API_COMPLETE_EVENT, { _id })
+}
+export function* completeDataEvent(data) {
+  try {
+    const response = yield call(completeEvent, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(event.getAllEvent())
+      yield put(event.completeEventSucces(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Thay đổi trạng thái sự kiện thành công !'
+      })
+    } else {
+      yield put(event.completeEventFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+    yield put(event.completeEventFail(error))
+  }
+}
+
+function cancelEvent(fromData) {
+  const { _id } = fromData.payload
+  return axiosClient.post(apiUrl.URL_API_CANCEL_EVENT, { _id })
+}
+export function* cancelDataEvent(data) {
+  try {
+    const response = yield call(cancelEvent, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(event.getAllEvent())
+      yield put(event.cancelEventSucces(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Thay đổi trạng thái sự kiện thành công !'
+      })
+    } else {
+      yield put(event.cancelEventFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+    yield put(event.cancelEventFail(error))
+  }
+}
+function reopenEvent(fromData) {
+  const { _id } = fromData.payload
+  return axiosClient.post(apiUrl.URL_API_REOPEN_EVENT, { _id })
+}
+export function* reopenDataEvent(data) {
+  try {
+    const response = yield call(reopenEvent, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(event.getAllEvent())
+      yield put(event.reopenEventSucces(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Thay đổi trạng thái sự kiện thành công !'
+      })
+    } else {
+      yield put(event.reopenEventFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+    yield put(event.reopenEventFail(error))
+  }
+}
+
 export function* actionEvent() {
   yield takeEvery(type.ADD_EVENT, addDataEvent)
   yield takeEvery(type.GET_ALL_EVENT, getDataAllEvent)
@@ -219,4 +320,7 @@ export function* actionEvent() {
   yield takeEvery(type.GET_EVENT_HISTORY, getDataEventHistory)
   yield takeEvery(type.UPDATE_EVENT, updateDataEvent)
   yield takeEvery(type.DELETE_EVENT, deleteDataEvent)
+  yield takeEvery(type.COMPLETE_EVENT, completeDataEvent)
+  yield takeEvery(type.CANCEL_EVENT, cancelDataEvent)
+  yield takeEvery(type.REOPEN_EVENT, reopenDataEvent)
 }

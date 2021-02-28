@@ -4,33 +4,32 @@ import {
   SettingOutlined,
   UserOutlined
 } from '@ant-design/icons'
-import { Avatar, Col, Dropdown, Menu, Row } from 'antd'
+import { Avatar, Col, Menu, Row, Popover } from 'antd'
 import React, { useCallback, useRef, useMemo } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import ChangePassword from './changePassword'
 import logo from '@assets/images/logo.png'
 import './pageHeader.scss'
+import { useState } from 'react'
 
 function PageHeader(props) {
   const { history, currentUser, onLogout } = props
   const modalRef = useRef()
   const goHome = useCallback(() => history.push('/home'), [history])
   const goBack = useCallback(() => history.goBack(), [history])
+  const [visible, setVisible] = useState(false)
 
   const menu = useMemo(
     () => (
       <Menu>
-        <Menu.Item>
-          <a style={{ textTransform: 'uppercase' }}>{currentUser?.name}</a>
-        </Menu.Item>
         <Menu.Item icon={<UserOutlined />}>
           <Link to='/profile'>Thông tin cá nhân</Link>
         </Menu.Item>
         <Menu.Item icon={<SettingOutlined />}>
-          <a onClick={() => modalRef.current?.openModal()}>Thay đổi mật khẩu</a>
-        </Menu.Item>
-        <Menu.Item icon={<EditOutlined />}>
-          <a>Chỉnh sửa trang chủ</a>
+          <a onClick={() => {
+            setVisible(false)
+            modalRef.current?.openModal()
+          }}>Thay đổi mật khẩu</a>
         </Menu.Item>
         <Menu.Item icon={<PoweroffOutlined />}>
           <a onClick={() => onLogout()}>Đăng xuất</a>
@@ -39,6 +38,9 @@ function PageHeader(props) {
     ),
     [currentUser]
   )
+  const handleVisibleChange = (visible) => {
+    setVisible(visible)
+  }
   return (
     <>
       <Row id="header" justify="space-between">
@@ -63,9 +65,16 @@ function PageHeader(props) {
         </Col>
         <Col className="header-search"></Col>
         <Col className="header-end">
-          <Dropdown overlay={menu} placement="bottomLeft">
+          <Popover
+            content={menu}
+            title={(<a style={{ textTransform: 'uppercase' }}>{currentUser?.name}</a>)}
+            trigger="click"
+            placement="bottomRight"
+            visible={visible}
+            onVisibleChange={handleVisibleChange}
+          >
             <Avatar style={{ cursor: 'pointer' }} icon={<UserOutlined />} />
-          </Dropdown>
+          </Popover >
         </Col>
       </Row>
       <ChangePassword modalRef={modalRef}/>

@@ -9,7 +9,8 @@ import ModalViewEvent from './modal/modalViewEvent'
 
 const objState = {
   PROCESSING: 'Đang diễn ra',
-  APPROVED: 'Đã hoàn thành'
+  COMPLETED: 'Đã hoàn thành',
+  CANCELLED: 'Đã Hủy'
 }
 
 const EventGrid = ({ toggleShowList }) => {
