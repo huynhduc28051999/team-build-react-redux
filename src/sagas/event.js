@@ -178,10 +178,45 @@ export function* updateDataEvent(data) {
   }
 }
 
+function deleteEvent(fromData) {
+  const { ids } = fromData.payload
+  return axiosClient.post(apiUrl.URL_API_DELETE_EVENT, { ids })
+}
+export function* deleteDataEvent(data) {
+  try {
+    const response = yield call(deleteEvent, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(event.getAllEvent())
+      yield put(event.deleteEventSucces(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Xóa sự kiện thành công !'
+      })
+    } else {
+      yield put(event.deleteEventFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+    yield put(event.deleteEventFail(error))
+  }
+}
+
 export function* actionEvent() {
   yield takeEvery(type.ADD_EVENT, addDataEvent)
   yield takeEvery(type.GET_ALL_EVENT, getDataAllEvent)
   yield takeEvery(type.GET_EVENT_BY_RANGE_DATE, getDataByRangeDate)
   yield takeEvery(type.GET_EVENT_HISTORY, getDataEventHistory)
   yield takeEvery(type.UPDATE_EVENT, updateDataEvent)
+  yield takeEvery(type.DELETE_EVENT, deleteDataEvent)
 }

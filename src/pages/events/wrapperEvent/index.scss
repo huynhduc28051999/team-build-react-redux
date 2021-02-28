@@ -11,9 +11,6 @@
   .action-master-reverse {
     display: grid;
     grid-template-columns: 30px 130px 20px;
-    &:hover {
-      color: #555;
-    }
     &:hover > .list-option-change {
       display: block;
     }
@@ -40,6 +37,7 @@
           font-size: 14px;
           &:hover {
             background-color: #20a0ff;
+            color: #fff;
           }
         }
       }

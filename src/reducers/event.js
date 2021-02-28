@@ -108,6 +108,26 @@ const eventReducer = (state = initialState, action) => {
         isLoading: false
       }
     }
+    case Type.DELETE_EVENT: {
+      return {
+        ...state,
+        isSuccess: false,
+        error: null
+      }
+    }
+    case Type.DELETE_EVENT_SUCCESS: {
+      return {
+        ...state,
+        isSuccess: true
+      }
+    }
+    case Type.DELETE_EVENT_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        error: error
+      }
+    }
     default: {
       return state
     }

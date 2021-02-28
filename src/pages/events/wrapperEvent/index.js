@@ -6,8 +6,11 @@ import './index.scss'
 import DangXuLy from '@assets/icon/dangXuLy.svg'
 import HoanThanh from '@assets/icon/hoanThanh.svg'
 import HuySuKien from '@assets/icon/huySuKien.svg'
+import { useDispatch } from 'react-redux'
+import { deleteEvent } from '@actions/event'
 
 export default React.memo(props => {
+  const dispatch = useDispatch()
   const {
     evtWrapperProps,
     handleClickAdd,
@@ -18,7 +21,11 @@ export default React.memo(props => {
   }, [])
   const handleDeleteEvent = (e, _id) => {
     if (e) e.preventDefault()
-    console.log(_id)
+    dispatch(
+      deleteEvent({
+        ids: [_id]
+      })
+    )
   }
   return (
     <span id={evtWrapperProps.event._id} onContextMenu={handleRightClick} className='wrapper-event'>

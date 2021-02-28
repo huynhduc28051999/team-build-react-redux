@@ -111,3 +111,28 @@ export const updateEventFail = error => {
     }
   }
 }
+
+export const deleteEvent = ({ ids }) => {
+  return {
+    type: type.DELETE_EVENT,
+    payload: {
+      ids
+    }
+  }
+}
+
+export const deleteEventSucces = () => {
+  return {
+    type: type.DELETE_EVENT_SUCCESS,
+    payload: {}
+  }
+}
+
+export const deleteEventFail = error => {
+  return {
+    type: type.DELETE_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}
