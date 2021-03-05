@@ -30,7 +30,7 @@ const Layout = (props) => {
   return (
     <div
       style={{
-        height: '100%',
+        minHeight: '100vh',
         // backgroundImage: `url`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
@@ -50,6 +50,7 @@ const Layout = (props) => {
         <Content className='layout-wapper'>
           <div
             className="site-layout-content"
+            style={{ minHeight: 'calc(100vh - 5.75rem)' }}
           >
             {React.cloneElement(children, {
               me: currentUser,

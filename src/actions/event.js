@@ -211,3 +211,169 @@ export const reopenEventFail = error => {
     }
   }
 }
+
+export const searchEvent = ({ searchBy, keywords }) => {
+  return {
+    type: type.SEARCH_EVENT,
+    payload: {
+      searchBy,
+      keywords
+    }
+  }
+}
+
+export const searchEventSuccess = (data) => {
+  return {
+    type: type.SEARCH_EVENT_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const searchEventFail = error => {
+  return {
+    type: type.SEARCH_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}
+
+export const getUserByEvent = ({ idEvent }) => {
+  return {
+    type: type.USER_BY_EVENT,
+    payload: {
+      idEvent
+    }
+  }
+}
+
+export const getUserByEventSuccess = (data) => {
+  return {
+    type: type.USER_BY_EVENT_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const getUserByEventFail = error => {
+  return {
+    type: type.USER_BY_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}
+
+export const approveUserToEvent = ({ idUser, idEvent }) => {
+  return {
+    type: type.APPROVE_USER_TO_EVENT,
+    payload: {
+      idEvent,
+      idUser
+    }
+  }
+}
+
+export const approveUserToEventSuccess = (data) => {
+  return {
+    type: type.APPROVE_USER_TO_EVENT_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const approveUserToEventFail = error => {
+  return {
+    type: type.APPROVE_USER_TO_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}
+export const removeUserFromEvent = ({ idUser, idEvent }) => {
+  return {
+    type: type.REMOVE_USER_FROM_EVENT,
+    payload: {
+      idEvent,
+      idUser
+    }
+  }
+}
+
+export const removeUserFromEventSuccess = (data) => {
+  return {
+    type: type.REMOVE_USER_FROM_EVENT_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const removeUserFromEventFail = error => {
+  return {
+    type: type.REMOVE_USER_FROM_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}
+
+export const addUserToEvent = ({ idUser, idEvent }) => {
+  return {
+    type: type.ADD_USER_TO_EVENT,
+    payload: {
+      idEvent,
+      idUser
+    }
+  }
+}
+
+export const addUserToEventSuccess = (data) => {
+  return {
+    type: type.ADD_USER_TO_EVENT_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const addUserToEventFail = error => {
+  return {
+    type: type.ADD_USER_TO_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}
+
+export const cancelUserRequest = ({ idUser, idEvent }) => {
+  return {
+    type: type.CANCEL_USER_REQUEST,
+    payload: {
+      idEvent,
+      idUser
+    }
+  }
+}
+
+export const cancelUserRequestSuccess = (data) => {
+  return {
+    type: type.CANCEL_USER_REQUEST_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const cancelUserRequestFail = error => {
+  return {
+    type: type.CANCEL_USER_REQUEST_FAIL,
+    payload: {
+      error
+    }
+  }
+}

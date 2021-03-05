@@ -313,6 +313,216 @@ export function* reopenDataEvent(data) {
   }
 }
 
+function searchEvent(fromData) {
+  const { searchBy, keywords } = fromData.payload
+  return axiosClient.get(apiUrl.URL_API_SEARCH_EVENT, {
+    params: {
+      searchBy,
+      keywords
+    }
+  })
+}
+
+export function* searchDataEvent(data) {
+  try {
+    const response = yield call(searchEvent, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(event.searchEventSuccess(dataRes))
+    } else {
+      yield put(event.searchEventFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(event.searchEventFail(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
+function getUserByEvent(fromData) {
+  const { idEvent } = fromData.payload
+  return axiosClient.get(apiUrl.URL_API_USER_BY_EVENT, {
+    params: { idEvent }
+  })
+}
+
+export function* getDataUserByEvent(data) {
+  try {
+    const response = yield call(getUserByEvent, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(event.getUserByEventSuccess(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Lấy danh sách thành công !'
+      })
+    } else {
+      yield put(event.getUserByEventFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(event.getUserByEventFail(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
+function approveUserToEvent(fromData) {
+  const { idUser, idEvent } = fromData.payload
+  return axiosClient.post(apiUrl.URL_API_APPROVE_USER_TO_EVENT, { idEvent, idUser })
+}
+
+export function* approveDataUserToEvent(data) {
+  try {
+    const response = yield call(approveUserToEvent, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(event.getUserByEvent({ idEvent: dataRes.idEvent }))
+      yield put(event.approveUserToEventSuccess(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Duyệt thêm nhân viên vào sự kiện thành công !'
+      })
+    } else {
+      yield put(event.approveUserToEventFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(event.approveUserToEventFail(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
+function removeUserFromEvent(fromData) {
+  const { idUser, idEvent } = fromData.payload
+  return axiosClient.post(apiUrl.URL_API_REMOVE_USER_FROM_EVENT, { _id: idEvent, idUser })
+}
+
+export function* removeDataUserFromEvent(data) {
+  try {
+    const response = yield call(removeUserFromEvent, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(event.getUserByEvent({ idEvent: dataRes.idEvent }))
+      yield put(event.removeUserFromEventSuccess(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Xóa nhân viên khỏi sự kiện thành công !'
+      })
+    } else {
+      yield put(event.removeUserFromEventFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(event.removeUserFromEventFail(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
+function addUserToEvent(fromData) {
+  const { idUser, idEvent } = fromData.payload
+  return axiosClient.post(apiUrl.URL_API_ADD_USER_TO_EVENT, { _id: idEvent, idUser })
+}
+
+export function* addDataUserToEvent(data) {
+  try {
+    const response = yield call(addUserToEvent, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(event.getUserByEvent({ idEvent: dataRes.idEvent }))
+      yield put(event.addUserToEventSuccess(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Duyệt thêm nhân viên vào sự kiện thành công !'
+      })
+    } else {
+      yield put(event.addUserToEventFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(event.addUserToEventFail(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
+function cancelUserRequest(fromData) {
+  const { idUser, idEvent } = fromData.payload
+  return axiosClient.post(apiUrl.URL_API_CANCEL_USER_REQUEST, { _id: idEvent, idUser })
+}
+
+export function* cancelDataUserRequest(data) {
+  try {
+    const response = yield call(cancelUserRequest, data)
+    const { data: dataRes } = response
+    if (dataRes) {
+      yield put(event.getUserByEvent({ idEvent: dataRes.idEvent }))
+      yield put(event.cancelUserRequestSuccess(dataRes))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Hủy yêu cầu tham gia sự kiện thành công !'
+      })
+    } else {
+      yield put(event.cancelUserRequestFail(dataRes))
+      OpenNotification({
+        type: 'error',
+        description: dataRes,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(event.cancelUserRequestFail(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
 export function* actionEvent() {
   yield takeEvery(type.ADD_EVENT, addDataEvent)
   yield takeEvery(type.GET_ALL_EVENT, getDataAllEvent)
@@ -323,4 +533,10 @@ export function* actionEvent() {
   yield takeEvery(type.COMPLETE_EVENT, completeDataEvent)
   yield takeEvery(type.CANCEL_EVENT, cancelDataEvent)
   yield takeEvery(type.REOPEN_EVENT, reopenDataEvent)
+  yield takeEvery(type.SEARCH_EVENT, searchDataEvent)
+  yield takeEvery(type.USER_BY_EVENT, getDataUserByEvent)
+  yield takeEvery(type.APPROVE_USER_TO_EVENT, approveDataUserToEvent)
+  yield takeEvery(type.REMOVE_USER_FROM_EVENT, removeDataUserFromEvent)
+  yield takeEvery(type.ADD_USER_TO_EVENT, addDataUserToEvent)
+  yield takeEvery(type.CANCEL_USER_REQUEST, cancelDataUserRequest)
 }

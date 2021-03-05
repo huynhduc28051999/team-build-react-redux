@@ -1,4 +1,4 @@
-export const URL_BACKEND = process.env.backend || 'http://localhost:4000/'
+export const URL_BACKEND = process.env.backend || `${window.location.protocol}//${window.location.host.split(':')[0]}:4000`
 
 export const URL_API_LOGIN = '/auth/login'
 export const URL_API_PROFILE = '/user/profile'
@@ -30,3 +30,9 @@ export const URL_API_DELETE_EVENT = '/event/delete-event'
 export const URL_API_COMPLETE_EVENT = '/event/complete-event'
 export const URL_API_CANCEL_EVENT = '/event/cancel-event'
 export const URL_API_REOPEN_EVENT = '/event/reopen-event'
+export const URL_API_SEARCH_EVENT = '/event/search-event'
+export const URL_API_USER_BY_EVENT = '/event/user-by-event'
+export const URL_API_APPROVE_USER_TO_EVENT = '/event/approve-user-request'
+export const URL_API_REMOVE_USER_FROM_EVENT = '/event/remove-user-from-event'
+export const URL_API_ADD_USER_TO_EVENT = '/event/add-user-to-event'
+export const URL_API_CANCEL_USER_REQUEST = '/event/cancel-user-request'

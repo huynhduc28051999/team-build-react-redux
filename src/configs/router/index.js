@@ -37,6 +37,16 @@ export const authenticatedRoutes = [
     path: '/events',
     component: 'events',
   },
+  {
+    isExact: true,
+    path: '/detailEvent/:_id?',
+    component: 'detailEvent',
+  },
+  {
+    isExact: true,
+    path: '/searchEvent',
+    component: 'searchEvent',
+  },
 ]
 
 export const menuRoute = [
@@ -54,6 +64,10 @@ export const menuRoute = [
       {
         name: 'Sự kiện',
         path: '/events'
+      },
+      {
+        name: 'Tìm kiếm sự kiện',
+        path: '/searchEvent'
       }
     ]
   }

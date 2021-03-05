@@ -6,7 +6,9 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   isLoadingGet: false,
-  eventHistory: []
+  eventHistory: [],
+  searchEvent: [],
+  userByEvent: []
 }
 const eventReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -186,6 +188,137 @@ const eventReducer = (state = initialState, action) => {
       return {
         ...state,
         error: error
+      }
+    }
+    case Type.SEARCH_EVENT: {
+      return {
+        ...state,
+        isLoadingGet: true,
+        error: null
+      }
+    }
+    case Type.SEARCH_EVENT_SUCCESS: {
+      const { data } = action.payload
+      return {
+        ...state,
+        isLoadingGet: false,
+        searchEvent: data
+      }
+    }
+    case Type.SEARCH_EVENT_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        error: error,
+        isLoadingGet: false
+      }
+    }
+    case Type.USER_BY_EVENT: {
+      return {
+        ...state,
+        isLoadingGet: true,
+        userByEvent: [],
+        error: null
+      }
+    }
+    case Type.USER_BY_EVENT_SUCCESS: {
+      const { data } = action.payload
+      return {
+        ...state,
+        isLoadingGet: false,
+        userByEvent: data,
+      }
+    }
+    case Type.USER_BY_EVENT_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        error: error,
+        isLoadingGet: false
+      }
+    }
+    case Type.APPROVE_USER_TO_EVENT: {
+      return {
+        ...state,
+        isSuccess: false,
+        error: null
+      }
+    }
+    case Type.APPROVE_USER_TO_EVENT_SUCCESS: {
+      return {
+        ...state,
+        isSuccess: true
+      }
+    }
+    case Type.APPROVE_USER_TO_EVENT_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        error: error,
+        isSuccess: false
+      }
+    }
+    case Type.REMOVE_USER_FROM_EVENT: {
+      return {
+        ...state,
+        isSuccess: false,
+        error: null
+      }
+    }
+    case Type.REMOVE_USER_FROM_EVENT_SUCCESS: {
+      return {
+        ...state,
+        isSuccess: true
+      }
+    }
+    case Type.REMOVE_USER_FROM_EVENT_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        error: error,
+        isSuccess: false
+      }
+    }
+    case Type.ADD_USER_TO_EVENT: {
+      return {
+        ...state,
+        isSuccess: false,
+        error: null
+      }
+    }
+    case Type.ADD_USER_TO_EVENT_SUCCESS: {
+      return {
+        ...state,
+        isSuccess: true
+      }
+    }
+    case Type.ADD_USER_TO_EVENT_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        error: error,
+        isSuccess: false
+      }
+    }
+    case Type.CANCEL_USER_REQUEST: {
+      return {
+        ...state,
+        isSuccess: false,
+        error: null
+      }
+    }
+    case Type.CANCEL_USER_REQUEST_SUCCESS: {
+      return {
+        ...state,
+        isSuccess: true
+      }
+    }
+    case Type.CANCEL_USER_REQUEST_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        error: error,
+        isSuccess: false
       }
     }
     default: {
