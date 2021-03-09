@@ -1,7 +1,10 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import * as moment from 'moment'
 import { Button } from 'antd'
 import './index.scss'
+import axiosClient from '@utils/axiosClient'
+import { URL_API_DELETE_USER_EVENT, URL_API_REQUEST_JOIN_EVENT } from '@constants/apiUrl'
+import { OpenNotification } from '@components/Notification'
 
 const objState = {
   PROCESSING: 'Đang diễn ra',
@@ -12,10 +15,58 @@ const objState = {
 export default function ItemEvent(props) {
   const {
     event,
-    modalRef
+    modalRef,
+    handleSearchClick
   } = props
   const handleOpenModal = () => {
     modalRef.current?.openModal(event._id)
+  }
+  const handleDeleteUserEvent = async () => {
+    try {
+      const { data } = await axiosClient.delete(URL_API_DELETE_USER_EVENT, {
+        params: { id: event.userEventByMe._id }
+      })
+      if (data) {
+        OpenNotification({
+          type: 'success',
+          description: 'Hủy thành công',
+          title: 'Thành công'
+        })
+        handleSearchClick()
+      }
+    } catch (error) {
+      OpenNotification({
+        type: 'error',
+        description: error,
+        title: 'Lỗi'
+      })
+    }
+  }
+  const handleRequestJoin = async () => {
+    try {
+      const { data } = await axiosClient.post(URL_API_REQUEST_JOIN_EVENT, { idEvent: event._id })
+      if (data) {
+        OpenNotification({
+          type: 'success',
+          description: 'Yêu cầu tham gia thành công',
+          title: 'Thành công'
+        })
+        handleSearchClick()
+      }
+    } catch (error) {
+      OpenNotification({
+        type: 'error',
+        description: error,
+        title: 'Lỗi'
+      })
+    }
+  }
+  const handleActionWithEvent = () => {
+    if (event?.userEventByMe?.state) {
+      handleDeleteUserEvent()
+    } else {
+      handleRequestJoin()
+    }
   }
   return (
     <div className='item-event'>
@@ -29,7 +80,16 @@ export default function ItemEvent(props) {
       </div>
       <div className='action'>
         <Button className='btn-action'>Xem chi tiết</Button>
-        <Button className='btn-action'>Yêu cầu tham gia</Button>
+        {event?.userEventByMe?.state !== 'CANCELLED' && (
+          <Button className='btn-action' onClick={handleActionWithEvent} >
+            {event?.userEventByMe?.state === 'APPROVED'
+              ? 'Hủy tham gia'
+              : event?.userEventByMe?.state === 'REQUESTED'
+                ? 'Hủy yêu cầu'
+                : 'Yêu cầu tham gia'
+            }
+          </Button>
+        )}
         <Button className='btn-action' onClick={handleOpenModal}>Thêm nhân viên</Button>
       </div>
     </div>

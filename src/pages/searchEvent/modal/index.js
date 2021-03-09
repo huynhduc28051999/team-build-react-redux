@@ -1,4 +1,4 @@
-import React, {  forwardRef, useImperativeHandle, useReducer } from 'react'
+import React, {  forwardRef, useImperativeHandle, useReducer, useEffect } from 'react'
 import { Modal, Table, Button } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserByEvent, approveUserToEvent, removeUserFromEvent, addUserToEvent, cancelUserRequest } from '@actions/event'
@@ -19,8 +19,13 @@ export default forwardRef((props, ref) =>  {
   const { visible, idEvent } = state
   const dispatch = useDispatch()
   const userByEvent = useSelector(state => state.event.userByEvent)
+  const isSuccess = useSelector(state => state.event.isSuccess)
+  useEffect(() => {
+    if (isSuccess) {
+      props.handleSearchClick()
+    }
+  }, [isSuccess])
   const openModal = (idEvent) => {
-    console.log(idEvent)
     dispatch(
       getUserByEvent({ idEvent })
     )

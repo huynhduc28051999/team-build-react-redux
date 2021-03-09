@@ -90,7 +90,7 @@ export default function SearchEvent() {
         </div>
         <div className='search-event-content'>
           {state.listEvent.map((item, idx) => (
-            <ItemEvent key={idx} event={item} modalRef={modalRef} />
+            <ItemEvent key={idx} event={item} modalRef={modalRef} handleSearchClick={handleSearchClick} />
           ))}
         </div>
         <div className='search-event-pagination'>
@@ -104,7 +104,7 @@ export default function SearchEvent() {
           />
         </div>
       </div>
-      <ModalUserManager ref={modalRef} />
+      <ModalUserManager ref={modalRef} handleSearchClick={handleSearchClick} />
     </>
   )
 }
