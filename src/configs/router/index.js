@@ -29,7 +29,7 @@ export const authenticatedRoutes = [
   },
   {
     isExact: true,
-    path: '/detailGroup/:_id?',
+    path: '/detailGroup/:_id',
     component: 'detailGroup'
   },
   {
@@ -39,7 +39,7 @@ export const authenticatedRoutes = [
   },
   {
     isExact: true,
-    path: '/detailEvent/:_id?',
+    path: '/detailEvent/:_id',
     component: 'detailEvent',
   },
   {

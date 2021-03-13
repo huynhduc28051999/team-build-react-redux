@@ -1,0 +1,16 @@
+.event-info {
+  .avatar-content {
+    display: flex;
+    margin-left: 10px;
+    align-items: center;
+    .action {
+      margin-left: 20px;
+      span {
+        cursor: pointer;
+      }
+    }
+  }
+  .event-info-content {
+    margin-top: 20px;
+  }
+}

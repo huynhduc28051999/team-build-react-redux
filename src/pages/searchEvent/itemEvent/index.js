@@ -5,6 +5,7 @@ import './index.scss'
 import axiosClient from '@utils/axiosClient'
 import { URL_API_DELETE_USER_EVENT, URL_API_REQUEST_JOIN_EVENT } from '@constants/apiUrl'
 import { OpenNotification } from '@components/Notification'
+import { withRouter } from 'react-router-dom'
 
 const objState = {
   PROCESSING: 'Đang diễn ra',
@@ -12,11 +13,12 @@ const objState = {
   CANCELLED: 'Đã Hủy'
 }
 
-export default function ItemEvent(props) {
+export default withRouter(function ItemEvent(props) {
   const {
     event,
     modalRef,
-    handleSearchClick
+    handleSearchClick,
+    history
   } = props
   const handleOpenModal = () => {
     modalRef.current?.openModal(event._id)
@@ -68,6 +70,9 @@ export default function ItemEvent(props) {
       handleRequestJoin()
     }
   }
+  const handleViewDetail = () => {
+    history.push(`/detailEvent/${event._id}`)
+  }
   return (
     <div className='item-event'>
       <div className='intro'>
@@ -79,7 +84,7 @@ export default function ItemEvent(props) {
         <span className='state-value'>{objState[event.state]}</span>
       </div>
       <div className='action'>
-        <Button className='btn-action'>Xem chi tiết</Button>
+        <Button className='btn-action' onClick={handleViewDetail}>Xem chi tiết</Button>
         {event?.userEventByMe?.state !== 'CANCELLED' && (
           <Button className='btn-action' onClick={handleActionWithEvent} >
             {event?.userEventByMe?.state === 'APPROVED'
@@ -94,4 +99,4 @@ export default function ItemEvent(props) {
       </div>
     </div>
   )
-}
+})

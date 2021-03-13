@@ -17,4 +17,33 @@
   border: 1px solid #ebedf0;
   border-radius: 2px;
 }
+
+.event-table {
+  table-layout: fixed;
+  width: 100%;
+  font-size: 14px;
+  border-collapse: collapse;
+  td,
+  th {
+    border: 1.5px solid rgb(114, 114, 114);
+    padding: 8px;
+    background-color: #f2f2f2;
+  }
+
+  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    font-weight: bold;
+    background-color: #f2f2f2;
+  }
+
+  &.event-table-small-header {
+    th {
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+  }
+}
+
 @import '~antd/dist/antd.css';

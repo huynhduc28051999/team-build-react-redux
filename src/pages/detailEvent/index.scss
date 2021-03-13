@@ -1,0 +1,12 @@
+.detail-event {
+  padding: 18px;
+  background-color: #fff;
+  min-height: calc(100vh - 5.75rem);
+  .header-title {
+    font-size: 30px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+}

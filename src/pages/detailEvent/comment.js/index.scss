@@ -1,0 +1,29 @@
+.comment-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: calc(100vh - 16rem);
+  background-color: #e0e0e0;
+  .commnented {
+    overflow-y: auto;
+    .item-comment {
+      // background-color: #fff;
+      display: flex;
+      margin: 10px;
+      .avatar {
+        margin-top: 5px;
+      }
+      .content-infor {
+        border-radius: 6px;
+        margin-left: 10px;
+        width: fit-content;
+        background-color: #fff;
+        padding: 5px 10px;
+        max-width: 95%;
+        .info-user {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
