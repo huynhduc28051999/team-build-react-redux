@@ -11,7 +11,7 @@ import ModalUserManager from './modal'
 
 const { Option } = Select
 
-export default function SearchEvent() {
+export default function SearchEvent(props) {
   const [state, setState] = useReducer(stateReducer, {
     searchBy: 'name',
     keywords: '',
@@ -90,7 +90,7 @@ export default function SearchEvent() {
         </div>
         <div className='search-event-content'>
           {state.listEvent.map((item, idx) => (
-            <ItemEvent key={idx} event={item} modalRef={modalRef} handleSearchClick={handleSearchClick} />
+            <ItemEvent key={idx} event={item} modalRef={modalRef} handleSearchClick={handleSearchClick} permission={props.permission} />
           ))}
         </div>
         <div className='search-event-pagination'>

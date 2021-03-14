@@ -8,7 +8,9 @@ const initialState = {
   isLoadingGet: false,
   eventHistory: [],
   searchEvent: [],
-  userByEvent: []
+  userByEvent: [],
+  eventById: null,
+  feedbackByEvent: []
 }
 const eventReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -319,6 +321,51 @@ const eventReducer = (state = initialState, action) => {
         ...state,
         error: error,
         isSuccess: false
+      }
+    }
+    case Type.GET_EVENT_BY_ID: {
+      return {
+        ...state,
+        isLoadingGet: true,
+        error: null,
+        eventById: null
+      }
+    }
+    case Type.GET_EVENT_BY_ID_SUCCESS: {
+      const { data } = action.payload
+      return {
+        ...state,
+        isLoadingGet: false,
+        eventById: data
+      }
+    }
+    case Type.GET_EVENT_BY_ID_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        isLoadingGet: false,
+        error
+      }
+    }
+    case Type.FEEDBACK_BY_EVENT: {
+      return {
+        ...state,
+        error: null,
+        feedbackByEvent: []
+      }
+    }
+    case Type.FEEDBACK_BY_EVENT_SUCCESS: {
+      const { data } = action.payload
+      return {
+        ...state,
+        feedbackByEvent: data
+      }
+    }
+    case Type.FEEDBACK_BY_EVENT_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        error
       }
     }
     default: {

@@ -5,8 +5,14 @@
     align-items: center;
     .action {
       margin-left: 20px;
+      display: flex;
       span {
         cursor: pointer;
+      }
+      &>div {
+        display: flex;
+        flex-direction: column;
+        margin-left: 10px;
       }
     }
   }

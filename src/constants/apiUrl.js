@@ -38,3 +38,9 @@ export const URL_API_ADD_USER_TO_EVENT = '/event/add-user-to-event'
 export const URL_API_CANCEL_USER_REQUEST = '/event/cancel-user-request'
 export const URL_API_DELETE_USER_EVENT = '/event/delete-user-event'
 export const URL_API_REQUEST_JOIN_EVENT = '/user/request-join-event'
+export const URL_API_GET_EVENT_BY_ID = '/event'
+
+export const URL_API_MODIFY_VOTE = '/vote/modify-vote'
+
+export const URL_API_FEEDBACK_BY_EVENT = '/feedback'
+export const URL_API_ADD_FEEDBACK = '/feedback'

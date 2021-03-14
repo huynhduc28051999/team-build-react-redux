@@ -377,3 +377,53 @@ export const cancelUserRequestFail = error => {
     }
   }
 }
+
+export const getEventById = ({ _id }) => {
+  return {
+    type: type.GET_EVENT_BY_ID,
+    payload: { _id }
+  }
+}
+
+export const getEventByIdSuccess = data => {
+  return {
+    type: type.GET_EVENT_BY_ID_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const getEventByIdFailed = error => {
+  return {
+    type: type.GET_EVENT_BY_ID_FAIL,
+    payload: {
+      error
+    }
+  }
+}
+
+export const feedbackByEvent = ({ idEvent }) => {
+  return {
+    type: type.FEEDBACK_BY_EVENT,
+    payload: { idEvent }
+  }
+}
+
+export const feedbackByEventSuccess = data => {
+  return {
+    type: type.FEEDBACK_BY_EVENT_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const feedbackByEventFailed = error => {
+  return {
+    type: type.FEEDBACK_BY_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}

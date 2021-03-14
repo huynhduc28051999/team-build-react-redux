@@ -2,7 +2,7 @@ import * as Type from '@constants/actionTypes'
 
 const initialState = {
   currentUser: {},
-  permission: [],
+  permission: {},
   error: null,
   isLoading: false,
   isSuccess: false
@@ -19,7 +19,7 @@ const meReducer = (state = initialState, action) => {
       return {
         ...state,
         currentUser: data.currentUser,
-        permission: [data.permission]
+        permission: data.permission
       }
     }
     case Type.ME_CONSTRUCTION_FAIL: {

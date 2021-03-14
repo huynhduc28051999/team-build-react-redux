@@ -95,7 +95,9 @@ export default withRouter(function ItemEvent(props) {
             }
           </Button>
         )}
-        <Button className='btn-action' onClick={handleOpenModal}>Thêm nhân viên</Button>
+        {props.permission?.code === 'MANAGER' && (
+          <Button className='btn-action' onClick={handleOpenModal}>Thêm nhân viên</Button>
+        )}
       </div>
     </div>
   )

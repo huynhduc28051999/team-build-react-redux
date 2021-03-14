@@ -523,6 +523,72 @@ export function* cancelDataUserRequest(data) {
   }
 }
 
+function getEventById(fromData) {
+  const { _id } = fromData.payload
+  return axiosClient.get(apiUrl.URL_API_GET_EVENT_BY_ID, { params: { id: _id } })
+}
+export function* getDataEventById(fromData) {
+  try {
+    const response = yield call(getEventById, fromData)
+    const { data } = response
+    if (data) {
+      yield put(event.getEventByIdSuccess(data))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Lấy dữ liệu sự kiện thành công!'
+      })
+    } else {
+      yield put(event.getEventByIdFailed(data))
+      OpenNotification({
+        type: 'error',
+        description: data,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(event.getEventByIdFailed(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
+function feedbackByEvent(fromData) {
+  const { idEvent } = fromData.payload
+  return axiosClient.get(apiUrl.URL_API_FEEDBACK_BY_EVENT, { params: { id: idEvent } })
+}
+export function* feedbackDataByEvent(fromData) {
+  try {
+    const response = yield call(feedbackByEvent, fromData)
+    const { data } = response
+    if (data) {
+      yield put(event.feedbackByEventSuccess(data))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Lấy danh sách bình luận thành công!'
+      })
+    } else {
+      yield put(event.feedbackByEventFailed(data))
+      OpenNotification({
+        type: 'error',
+        description: data,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(event.feedbackByEventFailed(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
 export function* actionEvent() {
   yield takeEvery(type.ADD_EVENT, addDataEvent)
   yield takeEvery(type.GET_ALL_EVENT, getDataAllEvent)
@@ -539,4 +605,6 @@ export function* actionEvent() {
   yield takeEvery(type.REMOVE_USER_FROM_EVENT, removeDataUserFromEvent)
   yield takeEvery(type.ADD_USER_TO_EVENT, addDataUserToEvent)
   yield takeEvery(type.CANCEL_USER_REQUEST, cancelDataUserRequest)
+  yield takeEvery(type.GET_EVENT_BY_ID, getDataEventById)
+  yield takeEvery(type.FEEDBACK_BY_EVENT, feedbackDataByEvent)
 }

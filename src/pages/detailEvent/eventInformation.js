@@ -1,49 +1,109 @@
 import React from 'react'
 import Avatar from 'antd/lib/avatar/avatar'
 import { LikeOutlined, DislikeOutlined } from '@ant-design/icons'
+import * as moment from 'moment'
 import './eventInfo.scss'
+import axiosClient from '@utils/axiosClient'
+import { URL_API_MODIFY_VOTE } from '@constants/apiUrl'
+import { useDispatch } from 'react-redux'
+import { getEventById } from '@actions/event'
+import { OpenNotification } from '@components/Notification'
 
-export default function EventInformation() {
+const objState = {
+  PROCESSING: 'Đang diễn ra',
+  COMPLETED: 'Đã hoàn thành',
+  CANCELLED: 'Đã Hủy'
+}
+
+export default function EventInformation({ event }) {
+  const dispatch = useDispatch()
+  const handleModifyVote = async (type) => {
+    try {
+      const { data } = await axiosClient.post(URL_API_MODIFY_VOTE, {
+        idEvent: event._id,
+        type
+      })
+      if (data) {
+        OpenNotification({
+          type: 'success',
+          title: 'Thành công'
+        })
+        dispatch(
+          getEventById({ _id: event._id })
+        )
+      }
+    } catch (error) {
+      OpenNotification({
+        type: 'error',
+        description: error,
+        title: 'Lỗi'
+      })
+    }
+  }
   return (
     <div className='event-info'>
       <div className='avatar-content'>
-        <Avatar size={78} className='avatar' src={`https://scontent.fdad1-1.fna.fbcdn.net/v/t1.0-9/142743166_2917583088489128_3169339497298041006_o.jpg?_nc_cat=100&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=4JEBCdQBbbUAX9-Lsr_&_nc_ht=scontent.fdad1-1.fna&oh=63194d3f711d7a835c9d1773d3aea42d&oe=606EFF78`} />
+        <Avatar size={78} className='avatar' src={event?.avatar} />
         <div className='action'>
-          <LikeOutlined style={{ fontSize: 40, marginRight: 10 }} />
-          <DislikeOutlined style={{ fontSize: 40 }} />
+          <div>
+            <LikeOutlined
+              style={{
+                fontSize: 40,
+                marginRight: 10,
+                color: event?.voteOfMe?.typeVote === 'LIKE' ? 'rgb(32, 120, 244)' : '#000'
+              }}
+              onClick={() => handleModifyVote('LIKE')}
+            />
+            <i>{event?.likeCount || 0}</i>
+          </div>
+          <div>
+            <DislikeOutlined
+              style={{
+                fontSize: 40,
+                color: event?.voteOfMe?.typeVote === 'DISLIKE' ? 'rgb(32, 120, 244)' : '#000'
+              }}
+              onClick={() => handleModifyVote('DISLIKE')}
+            />
+            <i>{event?.dislikeCount || 0}</i>
+          </div>
         </div>
       </div>
       <div className='event-info-content'>
         <table className='event-table'>
-          <tr>
-            <td width='30%'>Tên sự kiện:</td>
-            <td>Sự kiện 1</td>
-          </tr>
-          <tr>
-            <td>Thời lượng:</td>
-            <td>45 Phút</td>
-          </tr>
-          <tr>
-            <td>Phòng ban:</td>
-            <td>Phòng ban 1</td>
-          </tr>
-          <tr>
-            <td>Ngày tạo:</td>
-            <td>28/05/1999 12:12</td>
-          </tr>
-          <tr>
-            <td>Thời gian bắt đầu:</td>
-            <td>28/05/1999 12:12</td>
-          </tr>
-          <tr>
-            <td>Người tạo:</td>
-            <td>Lý Huỳnh Đức</td>
-          </tr>
-          <tr>
-            <td>Mô tả sự kiện:</td>
-            <td>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Inventore, eveniet nobis hic placeat dolor iusto! Adipisci quas soluta optio nam fuga assumenda quos! Inventore hic, eligendi iure voluptatibus velit doloremque.</td>
-          </tr>
+          <tbody>
+            <tr>
+              <td width='30%'>Tên sự kiện:</td>
+              <td>{event?.name}</td>
+            </tr>
+            <tr>
+              <td>Thời lượng:</td>
+              <td>{`${event?.duration} Phút`}</td>
+            </tr>
+            <tr>
+              <td>Phòng ban:</td>
+              <td>{event?.group?.name}</td>
+            </tr>
+            <tr>
+              <td>Trạng thái:</td>
+              <td>{objState[event?.state]}</td>
+            </tr>
+            <tr>
+              <td>Ngày tạo:</td>
+              <td>{moment(event?.createdAt).format('DD/MM/YYYY HH:mm')}</td>
+            </tr>
+            <tr>
+              <td>Thời gian bắt đầu:</td>
+              <td>{moment(event?.date).format('DD/MM/YYYY HH:mm')}</td>
+            </tr>
+            <tr>
+              <td>Người tạo:</td>
+              <td>{event?.createdBy?.name}</td>
+            </tr>
+            <tr>
+              <td>Mô tả sự kiện:</td>
+              <td>{event?.description}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
