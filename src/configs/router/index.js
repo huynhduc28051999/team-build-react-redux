@@ -47,6 +47,11 @@ export const authenticatedRoutes = [
     path: '/searchEvent',
     component: 'searchEvent',
   },
+  {
+    isExact: true,
+    path: '/reportUser',
+    component: 'reportUser',
+  },
 ]
 
 export const menuRoute = [
@@ -68,6 +73,10 @@ export const menuRoute = [
       {
         name: 'Tìm kiếm sự kiện',
         path: '/searchEvent'
+      },
+      {
+        name: 'Thống kê nhân viên',
+        path: '/reportUser'
       }
     ]
   }

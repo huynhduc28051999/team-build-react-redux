@@ -45,5 +45,11 @@
     }
   }
 }
-
+.report-page {
+  background-color: #fff;
+  min-height: calc(100vh - 5.75rem);
+  .ant-page-header-footer {
+    border-top: 1px solid #0000003d;
+  }
+}
 @import '~antd/dist/antd.css';

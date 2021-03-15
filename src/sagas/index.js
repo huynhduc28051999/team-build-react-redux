@@ -5,6 +5,7 @@ import { actionGroup } from './group'
 import { actionUser } from './user'
 import { actionPermission } from './permission'
 import { actionEvent } from './event'
+import { actionReport } from './report'
 export default function* rootSaga() {
   yield all([
     actionAuth(),
@@ -12,6 +13,7 @@ export default function* rootSaga() {
     actionGroup(),
     actionUser(),
     actionPermission(),
-    actionEvent()
+    actionEvent(),
+    actionReport()
   ])
 }
