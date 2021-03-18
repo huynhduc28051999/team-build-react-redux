@@ -28,3 +28,32 @@ export const reportUserFailed = error => {
     }
   }
 }
+
+export const reportEvent = ({ reportType, startDate, endDate }) => {
+  return {
+    type: type.REPORT_EVENT,
+    payload: {
+      type: reportType,
+      startDate,
+      endDate
+    }
+  }
+}
+
+export const reportEventSuccess = data => {
+  return {
+    type: type.REPORT_EVENT_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const reportEventFailed = error => {
+  return {
+    type: type.REPORT_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}

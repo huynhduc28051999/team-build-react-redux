@@ -3,10 +3,10 @@ import * as moment from 'moment'
 import { AgGridReact } from 'ag-grid-react'
 import AvatarDetail from '@components/avatarDetail'
 
-const genderInterface = {
-  MALE: 'Nam',
-  FEMALE: 'Nữ',
-  ORTHER: 'Khác'
+const objState = {
+  PROCESSING: 'Đang diễn ra',
+  COMPLETED: 'Đã hoàn thành',
+  CANCELLED: 'Đã Hủy'
 }
 
 function GridReport({ data = [] }) {
@@ -33,33 +33,29 @@ function GridReport({ data = [] }) {
         cellRenderer: 'avatarRenderer'
       },
       {
-        headerName: 'Tên nhân viên',
+        headerName: 'Tên sự kiện',
         field: 'name'
       },
       {
-        headerName: 'Tình trạng',
+        headerName: 'Đã khóa ?',
         field: 'isLocked',
         valueFormatter: ({ value }) => value ? 'Đã khóa' : ''
       },
       {
-        headerName: 'Email',
-        field: 'email'
+        headerName: 'Trạng thái',
+        field: 'state',
+        valueFormatter: ({ value }) => objState[value]
       },
       {
-        headerName: 'Số điện thoại',
-        field: 'phoneNumber'
+        headerName: 'Ngày diễn ra',
+        field: 'date',
+        valueFormatter: ({ value }) => moment(value).format('HH:mm DD/MM/YYYY'),
       },
       {
-        headerName: 'Giới tính',
-        field: 'gender',
-        valueFormatter: ({ value }) => genderInterface[value?.toUpperCase() || 'ORTHER']
+        headerName: 'Tổng thời gian',
+        field: 'duration',
+        valueFormatter: ({ value }) => `${value || 0} Phút`,
       },
-      {
-        headerName: 'Ngày sinh',
-        field: 'brithday',
-        valueFormatter: ({ value }) => moment(value).format('L'),
-        filter: false
-      }
     ],
     rowData: data,
     defaultColDef: {

@@ -44,4 +44,6 @@ export const URL_API_MODIFY_VOTE = '/vote/modify-vote'
 
 export const URL_API_FEEDBACK_BY_EVENT = '/feedback'
 export const URL_API_ADD_FEEDBACK = '/feedback'
+
 export const URL_API_REPORT_USER = '/report/reportUser'
+export const URL_API_REPORT_EVENT = '/report/reportEvent'
