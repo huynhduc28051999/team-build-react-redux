@@ -5,7 +5,9 @@ const initialState = {
   error: null,
   isLoading: false,
   isSuccess: false,
-  reportEvent: {}
+  reportEvent: {},
+  reportUserEvent: [],
+  userEventDetail: []
 }
 const reportReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -52,6 +54,56 @@ const reportReducer = (state = initialState, action) => {
       }
     }
     case Type.REPORT_EVENT_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        error: error,
+        isLoading: false
+      }
+    }
+    case Type.REPORT_USER_EVENT: {
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+        reportUserEvent: []
+      }
+    }
+    case Type.REPORT_USER_EVENT_SUCCESS: {
+      const { data } = action.payload
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+        reportUserEvent: data
+      }
+    }
+    case Type.REPORT_USER_EVENT_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        error: error,
+        isLoading: false
+      }
+    }
+    case Type.REPORT_USER_EVENT_DETAIL: {
+      return {
+        ...state,
+        isLoading: true,
+        error: null,
+        userEventDetail: []
+      }
+    }
+    case Type.REPORT_USER_EVENT_DETAIL_SUCCESS: {
+      const { data } = action.payload
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+        userEventDetail: data
+      }
+    }
+    case Type.REPORT_USER_EVENT_DETAIL_FAIL: {
       const { error } = action.payload
       return {
         ...state,

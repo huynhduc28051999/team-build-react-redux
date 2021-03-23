@@ -57,6 +57,11 @@ export const authenticatedRoutes = [
     path: '/reportEvent',
     component: 'reportEvent',
   },
+  {
+    isExact: true,
+    path: '/reportUserEvent',
+    component: 'reportUserEvent',
+  },
 ]
 
 export const menuRoute = [
@@ -86,6 +91,11 @@ export const menuRoute = [
       {
         name: 'Thống kê sự kiện',
         path: '/reportEvent'
+      },
+      
+      {
+        name: 'Thống kê sự kiện theo nhân viên',
+        path: '/reportUserEvent'
       }
     ]
   }

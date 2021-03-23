@@ -31,7 +31,7 @@ section.ant-layout.ant-layout-has-sider {
 
 ::-webkit-scrollbar {
   width: 5px !important;
-  height: auto;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track-piece {

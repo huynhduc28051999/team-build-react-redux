@@ -47,3 +47,5 @@ export const URL_API_ADD_FEEDBACK = '/feedback'
 
 export const URL_API_REPORT_USER = '/report/reportUser'
 export const URL_API_REPORT_EVENT = '/report/reportEvent'
+export const URL_API_REPORT_USER_EVENT = '/report/reportEventByUser'
+export const URL_API_REPORT_USER_EVENT_DETAIL = '/report/detail-user-event'

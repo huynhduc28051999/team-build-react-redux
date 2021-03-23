@@ -57,3 +57,61 @@ export const reportEventFailed = error => {
     }
   }
 }
+
+export const reportUserEvent = ({ startDate, endDate }) => {
+  return {
+    type: type.REPORT_USER_EVENT,
+    payload: {
+      startDate,
+      endDate
+    }
+  }
+}
+
+export const reportUserEventSuccess = data => {
+  return {
+    type: type.REPORT_USER_EVENT_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const reportUserEventFailed = error => {
+  return {
+    type: type.REPORT_USER_EVENT_FAIL,
+    payload: {
+      error
+    }
+  }
+}
+
+
+export const userEventDetail = ({ startDate, endDate, idUser }) => {
+  return {
+    type: type.REPORT_USER_EVENT_DETAIL,
+    payload: {
+      startDate,
+      endDate,
+      idUser
+    }
+  }
+}
+
+export const userEventDetailSuccess = data => {
+  return {
+    type: type.REPORT_USER_EVENT_DETAIL_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const userEventDetailFailed = error => {
+  return {
+    type: type.REPORT_USER_EVENT_DETAIL_FAIL,
+    payload: {
+      error
+    }
+  }
+}

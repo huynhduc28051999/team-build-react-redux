@@ -72,7 +72,78 @@ export function* reportDataEvent(fromData) {
     })
   }
 }
+
+function reportUserEvent(fromData) {
+  return axiosClient.get(apiUrl.URL_API_REPORT_USER_EVENT, {
+    params: { ...fromData.payload }
+  })
+}
+export function* reportDataUserEvent(fromData) {
+  try {
+    const response = yield call(reportUserEvent, fromData)
+    const { data } = response
+    if (data) {
+      yield put(report.reportUserEventSuccess(data))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Lấy dữ liệu báo cáo thành công!'
+      })
+    } else {
+      yield put(report.reportUserEventFailed(data))
+      OpenNotification({
+        type: 'error',
+        description: data,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(report.reportUserEventFailed(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
+function userEventDetail(fromData) {
+  return axiosClient.get(apiUrl.URL_API_REPORT_USER_EVENT_DETAIL, {
+    params: { ...fromData.payload }
+  })
+}
+export function* reportUserEventDetail(fromData) {
+  try {
+    const response = yield call(userEventDetail, fromData)
+    const { data } = response
+    if (data) {
+      yield put(report.userEventDetailSuccess(data))
+      OpenNotification({
+        type: 'success',
+        description: '',
+        title: 'Lấy dữ liệu báo cáo thành công!'
+      })
+    } else {
+      yield put(report.userEventDetailFailed(data))
+      OpenNotification({
+        type: 'error',
+        description: data,
+        title: 'Lỗi!'
+      })
+    }
+  } catch (error) {
+    yield put(report.userEventDetailFailed(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi!'
+    })
+  }
+}
+
 export function* actionReport() {
   yield takeEvery(type.REPORT_USER, reportDataUser)
   yield takeEvery(type.REPORT_EVENT, reportDataEvent)
+  yield takeEvery(type.REPORT_USER_EVENT, reportDataUserEvent)
+  yield takeEvery(type.REPORT_USER_EVENT_DETAIL, reportUserEventDetail)
 }
