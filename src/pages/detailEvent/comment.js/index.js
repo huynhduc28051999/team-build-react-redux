@@ -1,26 +1,34 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useContext } from 'react'
 import ItemComment from './itemComment'
 import './index.scss'
 import { Input } from 'antd'
 import { SendOutlined } from '@ant-design/icons'
 import { useSelector, useDispatch } from 'react-redux'
-import { feedbackByEvent } from '@actions/event'
+import { feedbackByEvent, addCommentAction } from '@actions/event'
 import { OpenNotification } from '@components/Notification'
 import axiosClient from '@utils/axiosClient'
 import { URL_API_ADD_FEEDBACK } from '@constants/apiUrl'
+import { SocketContext } from '@utils/socket'
 
 export default function Comment({ idEvent }) {
   const feedbacks = useSelector(state => state.event.feedbackByEvent)
   const dispatch = useDispatch()
   const inputRef = useRef()
+
+  const socket = useContext(SocketContext)
+  const handleListener = (data) => {
+    dispatch(addCommentAction(data))
+  }
+
   useEffect(() => {
     dispatch(
       feedbackByEvent({ idEvent })
     )
+    socket.emit('joinRoom', idEvent)
+    socket.on('comment', handleListener)
   }, [idEvent])
   
   const handleSubmit = async() => {
-    console.log(inputRef.current)
     const comment = inputRef.current?.state?.value
     if (comment) {
       try {
@@ -30,9 +38,9 @@ export default function Comment({ idEvent }) {
             type: 'success',
             title: 'Thành công',
           })
-          dispatch(
-            feedbackByEvent({ idEvent })
-          )
+          // dispatch(
+          //   feedbackByEvent({ idEvent })
+          // )
           inputRef.current.handleReset()
         }
       } catch (error) {

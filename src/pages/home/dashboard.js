@@ -1,16 +1,21 @@
 import React, { useCallback } from 'react'
-import { menuRoute } from '@configs'
+import { menuRouteManager, menuRouteAdmin, menuRouteUser } from '@configs'
 import { Link } from 'react-router-dom'
 import './dashboard.scss'
+import ChartUser from './chartUser'
+import ChartEvent from './chartEvent'
 
-const Dashboard = ({ history }) => {
+const Dashboard = ({ history, permission }) => {
   const handleClick = useCallback((path) => {
     history.push(path)
   }, [])
+  const router = permission.code === 'ADMIN' ? menuRouteAdmin : permission.code === 'MANAGER' ? menuRouteManager : menuRouteUser
   return (
     <div style={{ height: 'calc(100vh - 5.75rem)' }}>
       <div className='sections-wapper'>
-        {menuRoute.map((item, idx) => {
+        {permission.code === 'ADMIN' && <ChartUser />}
+        {permission.code === 'MANAGER' && <ChartEvent />}
+        {router.map((item, idx) => {
           return (
           <div key={idx} className='section-wapper'>
             <div className='top'>

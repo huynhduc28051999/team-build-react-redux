@@ -368,6 +368,17 @@ const eventReducer = (state = initialState, action) => {
         error
       }
     }
+    case Type.ADD_COMMENT: {
+      const { data } = action.payload
+      const exist = state.feedbackByEvent.some(item => item._id === data._id)
+      const newFeedback = [...state.feedbackByEvent]
+      if (!exist) newFeedback.push(data)
+      return {
+        ...state,
+        error: null,
+        feedbackByEvent: newFeedback
+      }
+    }
     default: {
       return state
     }

@@ -5,13 +5,6 @@ import { meContruction } from '@actions/me'
 import PageHeader from '@pages/pageHeader'
 import { logout } from '@actions/auth'
 import { Layout as LayoutAntd } from 'antd'
-import { initiateSocket } from '@utils/socket'
-// import io from 'socket.io-client'
-// io.connect('192.168.0.155:4000', {
-//   query: {
-//     autho: ''
-//   }
-// })
 const { Content } = LayoutAntd
 
 const Layout = (props) => {
@@ -24,15 +17,12 @@ const Layout = (props) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(meContruction())
-    initiateSocket()
-    // eslint-disable-next-line
   }, [])
   
   const onLogout = useCallback(() => {
     localStorage.clear('access-token')
     dispatch(logout())
     history.replace('/login')
-    // eslint-disable-next-line
   }, [])
   return (
     <div

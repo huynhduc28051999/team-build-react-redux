@@ -427,3 +427,12 @@ export const feedbackByEventFailed = error => {
     }
   }
 }
+
+export const addCommentAction = data => {
+  return {
+    type: type.ADD_COMMENT,
+    payload: {
+      data
+    }
+  }
+}

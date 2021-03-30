@@ -2,6 +2,13 @@
   height: 100%;
   overflow: auto;
   background: #ECEFEE;
+  .chart {
+    height: 70vh;
+    width: 100%;
+    background-color: #fff;
+    margin: 0.6rem;
+    border-radius: 4px;
+  }
   .section-wapper {
     margin-top: 0.8rem;
     margin-bottom: 0.6rem;

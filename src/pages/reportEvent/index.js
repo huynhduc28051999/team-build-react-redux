@@ -31,7 +31,6 @@ function ReportEvent() {
   
   const { startDate, endDate, type } = state
   const dataLine = JSON.parse(dataReport?.dataLine || '[]')
-  console.log(dataLine)
   useEffect(() => {
     const {
       COMPLETEDTotal,
@@ -93,7 +92,6 @@ function ReportEvent() {
     })
   }
   useEffect(() => {
-    console.log('zô1');
     dispatch(
       reportEvent({
         reportType: type,

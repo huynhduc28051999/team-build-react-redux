@@ -64,7 +64,7 @@ export const authenticatedRoutes = [
   },
 ]
 
-export const menuRoute = [
+export const menuRouteAdmin = [
   {
     title: 'Quản lý',
     childs: [
@@ -75,19 +75,63 @@ export const menuRoute = [
       {
         name: 'Nhân viên',
         path: '/users'
-      },
-      {
-        name: 'Sự kiện',
-        path: '/events'
-      },
+      }
+    ]
+  },
+  {
+    title: 'Tìm kiếm',
+    childs: [
       {
         name: 'Tìm kiếm sự kiện',
         path: '/searchEvent'
-      },
+      }
+    ]
+  },
+  {
+    title: 'Báo cáo',
+    childs: [
       {
         name: 'Thống kê nhân viên',
         path: '/reportUser'
-      },
+      }
+    ]
+  }
+]
+
+export const menuRouteUser = [
+  {
+    title: 'Tìm kiếm',
+    childs: [
+      {
+        name: 'Tìm kiếm sự kiện',
+        path: '/searchEvent'
+      }
+    ]
+  }
+]
+
+export const menuRouteManager = [
+  {
+    title: 'Quản lý',
+    childs: [
+      {
+        name: 'Sự kiện',
+        path: '/events'
+      }
+    ]
+  },
+  {
+    title: 'Tìm kiếm',
+    childs: [
+      {
+        name: 'Tìm kiếm sự kiện',
+        path: '/searchEvent'
+      }
+    ]
+  },
+  {
+    title: 'Báo cáo',
+    childs: [
       {
         name: 'Thống kê sự kiện',
         path: '/reportEvent'

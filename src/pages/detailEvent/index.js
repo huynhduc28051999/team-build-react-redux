@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Tabs } from 'antd'
 import EventInformation from './eventInformation'
 import './index.scss'
@@ -6,6 +6,7 @@ import ItemUser from './itemUser';
 import Comment from './comment.js';
 import { useSelector, useDispatch } from 'react-redux';
 import { getEventById } from '@actions/event';
+import { SocketContext } from '@utils/socket';
 
 const { TabPane } = Tabs;
 
@@ -13,14 +14,20 @@ export default function DetailEvent(props) {
   const { match: { params: { _id }} } = props
   const eventById = useSelector(state => state.event.eventById)
   const dispatch = useDispatch()
-  
+  const socket = useContext(SocketContext)
+
   useEffect(() => {
     if (_id) {
       dispatch(
         getEventById({ _id })
       )
     }
+    return () => {
+      socket.emit('leaveRoom', _id)
+      // socket.disconnect()
+    }
   }, [_id])
+  
 
   return (
     <div className='detail-event'>
