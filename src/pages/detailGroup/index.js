@@ -9,10 +9,14 @@ import AvatarUserDefault from '@assets/images/userDefault.png'
 import BackgroundDefault from '@assets/images/background-default.jpg'
 
 const DetailGroup = (props) => {
-  const { match, history } = props
+  const { match, history, permission } = props
   const dispatch = useDispatch()
   const isLoading = useSelector((state) => state.group.isLoading)
   const groupById = useSelector((state) => state.group.groupById)
+
+  const handleClickDetail = (id) => {
+    history.push(`/detailEvent/${id}`)
+  }
 
   useEffect(() => {
     if (!match.params._id) {
@@ -64,14 +68,14 @@ const DetailGroup = (props) => {
                   <img src={item.avatar || AvatarEventDefault} />
                   <h3>{item.name}</h3>
                   <p className='text'>{item.description}</p>
-                  <button>Xem chi tiết</button>
+                  {permission.code === 'USER' && <button onClick={() => handleClickDetail(item._id)}>Xem chi tiết</button>}
                 </div>
               ))}
             </div>
           </div>
           <div className="list-user">
             <div className="detail-group__container">
-              <h4>THÀNH VIÊN NHÓM</h4>
+              <h2>THÀNH VIÊN NHÓM</h2>
               <Row className="list-user_flex">
                 {groupById?.users?.map((item, idx) => (
                   <Col span={6} key={`user_${idx}`}>

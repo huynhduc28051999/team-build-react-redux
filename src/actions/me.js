@@ -51,3 +51,39 @@ export const changeProfileFail = error => {
     }
   }
 }
+
+export const notificationsContruction = (data) => {
+  return {
+    type: type.NOTIFICATION,
+    payload: {
+      data
+    }
+  }
+}
+
+export const notificationsSucces = data => {
+  return {
+    type: type.NOTIFICATION_SUCCESS,
+    payload: {
+      data
+    }
+  }
+}
+
+export const notificationsFail = error => {
+  return {
+    type: type.NOTIFICATION_FAIL,
+    payload: {
+      error
+    }
+  }
+}
+
+export const addNotification = (data) => {
+  return {
+    type: type.ADD_NOTIFICATION,
+    payload: {
+      data
+    }
+  }
+}

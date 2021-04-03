@@ -5,7 +5,8 @@ const initialState = {
   permission: {},
   error: null,
   isLoading: false,
-  isSuccess: false
+  isSuccess: false,
+  notifications: []
 }
 const meReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -55,25 +56,59 @@ const meReducer = (state = initialState, action) => {
     }
     case Type.CHANGE_PROFILE: {
       return {
-        isLoading: true,
-        ...state
+        ...state,
+        isLoading: true
       }
     }
     case Type.CHANGE_PROFILE_SUCCESS: {
       return {
+        ...state,
         isLoading: false,
         isSuccess: true,
-        error: null,
-        ...state
+        error: null
       }
     }
     case Type.CHANGE_PROFILE_FAIL: {
       const { error } = action.payload
       return {
+        ...state,
         isLoading: false,
         isSuccess: false,
-        error: error,
+        error: error
+      }
+    }
+    case Type.NOTIFICATION: {
+      return {
+        isLoading: true,
+        error: null,
         ...state
+      }
+    }
+    case Type.NOTIFICATION_SUCCESS: {
+      const { data } = action.payload
+      return {
+        ...state,
+        isLoading: false,
+        isSuccess: true,
+        notifications: data
+      }
+    }
+    case Type.NOTIFICATION_FAIL: {
+      const { error } = action.payload
+      return {
+        ...state,
+        isLoading: false,
+        isSuccess: false,
+        error: error
+      }
+    }
+    case Type.ADD_NOTIFICATION: {
+      const { data } = action.payload
+      return {
+        ...state,
+        isLoading: false,
+        isSuccess: true,
+        notifications: [...state.notifications, data]
       }
     }
     default: {

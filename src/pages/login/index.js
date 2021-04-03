@@ -3,7 +3,7 @@ import LoginForm from './loginForm'
 import './index.scss'
 import { Row, Col } from 'antd'
 
-export default function Login({ history }) {
+export default function Login() {
   return (
     <Row className="wrapper">
       <Col span={12}>

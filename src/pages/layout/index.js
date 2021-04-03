@@ -1,10 +1,11 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useContext } from 'react'
 import './layout.css'
 import { useSelector, useDispatch } from 'react-redux'
-import { meContruction } from '@actions/me'
+import { meContruction, addNotification } from '@actions/me'
 import PageHeader from '@pages/pageHeader'
 import { logout } from '@actions/auth'
 import { Layout as LayoutAntd } from 'antd'
+import { SocketContext } from '@utils/socket'
 const { Content } = LayoutAntd
 
 const Layout = (props) => {
@@ -15,9 +16,19 @@ const Layout = (props) => {
   const currentUser = useSelector(state => state.me.currentUser)
   const permission = useSelector(state => state.me.permission)
   const dispatch = useDispatch()
+  const { socket } = useContext(SocketContext)
   useEffect(() => {
     dispatch(meContruction())
   }, [])
+
+  useEffect(() => {
+    if (currentUser._id) {
+      socket.emit('joinRoom', currentUser._id)
+      socket.on('notification', (data) => {
+        dispatch(addNotification(data))
+      })
+    }
+  }, [JSON.stringify(currentUser)])
   
   const onLogout = useCallback(() => {
     localStorage.clear('access-token')

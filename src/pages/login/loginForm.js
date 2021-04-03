@@ -18,22 +18,12 @@ const tailLayout = {
   },
 };
 
-export default function LoginForm({
-  history
-}) {
+export default function LoginForm() {
   const [form] = Form.useForm()
-  const token = useSelector(state => state.auth.token)
-  const error = useSelector(state => state.auth.error)
   const isLoadingAuth = useSelector((state) => state.auth.isLoadingAuth)
   const dispatch = useDispatch()
   const onFinish = values => {
     dispatch(loginContruction(values))
-    if (token) {
-      history.push("/home")
-    }
-    if (error) {
-      console.log(error)
-    }
   };
 
   return (

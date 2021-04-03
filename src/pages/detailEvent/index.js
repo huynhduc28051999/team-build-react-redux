@@ -14,7 +14,7 @@ export default function DetailEvent(props) {
   const { match: { params: { _id }} } = props
   const eventById = useSelector(state => state.event.eventById)
   const dispatch = useDispatch()
-  const socket = useContext(SocketContext)
+  const { socket } = useContext(SocketContext)
 
   useEffect(() => {
     if (_id) {
@@ -45,7 +45,7 @@ export default function DetailEvent(props) {
           </div>
         </TabPane>
         <TabPane tab='Bình luận' key='3'>
-          <Comment idEvent={_id} />
+          <Comment idEvent={_id} event={eventById} />
         </TabPane>
       </Tabs>
       </div>

@@ -52,7 +52,7 @@ export default function EventInformation({ event }) {
                 marginRight: 10,
                 color: event?.voteOfMe?.typeVote === 'LIKE' ? 'rgb(32, 120, 244)' : '#000'
               }}
-              onClick={() => handleModifyVote('LIKE')}
+              onClick={() => event?.voteOfMe && handleModifyVote('LIKE')}
             />
             <i>{event?.likeCount || 0}</i>
           </div>
@@ -62,7 +62,7 @@ export default function EventInformation({ event }) {
                 fontSize: 40,
                 color: event?.voteOfMe?.typeVote === 'DISLIKE' ? 'rgb(32, 120, 244)' : '#000'
               }}
-              onClick={() => handleModifyVote('DISLIKE')}
+              onClick={() => event?.voteOfMe && handleModifyVote('DISLIKE')}
             />
             <i>{event?.dislikeCount || 0}</i>
           </div>

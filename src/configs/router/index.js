@@ -105,6 +105,10 @@ export const menuRouteUser = [
       {
         name: 'Tìm kiếm sự kiện',
         path: '/searchEvent'
+      },
+      {
+        name: 'Xem phòng ban',
+        path: '/detailGroup'
       }
     ]
   }

@@ -27,7 +27,6 @@ const ModalEvent = forwardRef((_, ref) => {
       visible: true,
       event: value
     })
-    console.log(value);
     form.setFieldsValue({
       ...value,
       date: value?.date ? moment(value.date) : moment()

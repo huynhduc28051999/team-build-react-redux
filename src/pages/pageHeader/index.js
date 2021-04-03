@@ -1,16 +1,20 @@
 import {
-  EditOutlined,
   PoweroffOutlined,
   SettingOutlined,
-  UserOutlined
+  UserOutlined,
+  BellOutlined
 } from '@ant-design/icons'
-import { Avatar, Col, Menu, Row, Popover } from 'antd'
-import React, { useCallback, useRef, useMemo } from 'react'
+import { Avatar, Col, Menu, Row, Popover, List, Badge, Button } from 'antd'
+import React, { useCallback, useRef, useMemo, useEffect, useState } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import ChangePassword from './changePassword'
 import logo from '@assets/images/logo.png'
 import './pageHeader.scss'
-import { useState } from 'react'
+import { notificationsContruction } from '@actions/me'
+import { useDispatch, useSelector } from 'react-redux'
+import axiosClient from '@utils/axiosClient'
+import { URL_API_NOTIFICATION_MAKE_READ_ALL, URL_API_NOTIFICATION_MAKE_READ } from '@constants/apiUrl'
+import { OpenNotification } from '@components/Notification'
 
 function PageHeader(props) {
   const { history, currentUser, onLogout } = props
@@ -18,7 +22,50 @@ function PageHeader(props) {
   const goHome = useCallback(() => history.push('/home'), [history])
   const goBack = useCallback(() => history.goBack(), [history])
   const [visible, setVisible] = useState(false)
+  const [visibleNotify, setVisibleNotify] = useState(false)
+  const dispatch = useDispatch()
+  const notifications = useSelector(state => state.me.notifications)
 
+  useEffect(() => {
+    dispatch(notificationsContruction())
+  }, [])
+  const handleReadAll = async() => {
+    try {
+      const { data } = await axiosClient.delete(URL_API_NOTIFICATION_MAKE_READ_ALL)
+      if (data) {
+        OpenNotification({
+          type: 'success',
+          title: 'Thành công',
+        })
+        dispatch(notificationsContruction())
+      }
+    } catch (error) {
+      OpenNotification({
+        type: 'error',
+        description: error,
+        title: 'Lỗi',
+      })
+    }
+  }
+
+  const handleRead = async(id) => {
+    try {
+      const { data } = await axiosClient.delete(URL_API_NOTIFICATION_MAKE_READ, { data: { id } })
+      if (data) {
+        OpenNotification({
+          type: 'success',
+          title: 'Thành công',
+        })
+        dispatch(notificationsContruction())
+      }
+    } catch (error) {
+      OpenNotification({
+        type: 'error',
+        description: error,
+        title: 'Lỗi',
+      })
+    }
+  }
   const menu = useMemo(
     () => (
       <Menu>
@@ -37,6 +84,25 @@ function PageHeader(props) {
       </Menu>
     ),
     [currentUser]
+  )
+  
+  const notificationsCom = useMemo(
+    () => (
+      <List
+        size="small"
+        bordered
+        dataSource={notifications}
+        renderItem={item => (
+          <List.Item>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <i>{item.content}</i>
+              <Button type='link' onClick={() => handleRead(item._id)}>Đã đọc</Button>
+            </div>
+          </List.Item>
+        )}
+      />
+    ),
+    [notifications]
   )
   const handleVisibleChange = (visible) => {
     setVisible(visible)
@@ -64,20 +130,39 @@ function PageHeader(props) {
           </a>
         </Col>
         <Col className="header-search"></Col>
-        <Col className="header-end">
-          <Popover
-            content={menu}
-            title={(<a style={{ textTransform: 'uppercase' }}>{currentUser?.name}</a>)}
-            trigger="click"
-            placement="bottomRight"
-            visible={visible}
-            onVisibleChange={handleVisibleChange}
-          >
-            <Avatar style={{ cursor: 'pointer' }} icon={<UserOutlined />} />
-          </Popover >
+        <Col>
+          <div className="header-end">
+            <Popover
+              content={notificationsCom}
+              title={(
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <a style={{ textTransform: 'uppercase' }}>Thông báo</a>
+                  <Button disabled={!notifications.length} type='link' onClick={handleReadAll}>Tất cả đã đọc</Button>
+                </div>
+              )}
+              trigger="click"
+              placement="bottomRight"
+              visible={visibleNotify}
+              onVisibleChange={setVisibleNotify}
+            >
+              <Badge count={notifications.length}>
+                <Avatar size={20} style={{ cursor: 'pointer' }} icon={<BellOutlined />} />
+              </Badge>
+            </Popover >
+            <Popover
+              content={menu}
+              title={(<a style={{ textTransform: 'uppercase' }}>{currentUser?.name}</a>)}
+              trigger="click"
+              placement="bottomRight"
+              visible={visible}
+              onVisibleChange={handleVisibleChange}
+            >
+              <Avatar style={{ cursor: 'pointer', marginLeft: 20 }} icon={<UserOutlined />} />
+            </Popover >
+          </div>
         </Col>
       </Row>
-      <ChangePassword modalRef={modalRef}/>
+      <ChangePassword modalRef={modalRef} />
     </>
   )
 }

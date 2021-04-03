@@ -5,7 +5,7 @@ import './dashboard.scss'
 import ChartUser from './chartUser'
 import ChartEvent from './chartEvent'
 
-const Dashboard = ({ history, permission }) => {
+const Dashboard = ({ history, permission, me }) => {
   const handleClick = useCallback((path) => {
     history.push(path)
   }, [])
@@ -22,15 +22,29 @@ const Dashboard = ({ history, permission }) => {
               <div className='title'>{item.title}</div>
             </div>
             <div className='section'>{item.childs.map(itemChild => (
-              <div
-                className='draggable-wapper'
-                key={itemChild.path}
-                onClick={() => handleClick(itemChild.path)}
-              >
-                <div className='inner'>
-                  <Link className='in-name' to={itemChild.path}>{itemChild.name}</Link>
-                </div>
-              </div>
+              <>
+                {itemChild.path === '/detailGroup' ? (
+                  <div
+                    className='draggable-wapper'
+                    key={itemChild.path}
+                    onClick={() => handleClick(`${itemChild.path}/${me.idGroup}`)}
+                  >
+                    <div className='inner'>
+                      <Link className='in-name' to={`${itemChild.path}/${me.idGroup}`}>{itemChild.name}</Link>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className='draggable-wapper'
+                    key={itemChild.path}
+                    onClick={() => handleClick(itemChild.path)}
+                  >
+                    <div className='inner'>
+                      <Link className='in-name' to={itemChild.path}>{itemChild.name}</Link>
+                    </div>
+                  </div>
+                )}
+              </>
             ))}</div>
           </div> 
           )

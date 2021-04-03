@@ -101,8 +101,36 @@ export function* changeProfileUser(data) {
   }
 }
 
+function notifications() {
+  return axiosClient.get(apiUrl.URL_API_NOTIFICATION)
+}
+
+export function* notificationsUser() {
+  try {
+    const response = yield call(notifications)
+    const { data: dataResp } = response
+    if (dataResp) {
+      yield put(me.notificationsSucces(dataResp))
+    } else {
+      yield put(me.notificationsFail(dataResp))
+      OpenNotification({
+        type: 'error',
+        description: dataResp,
+        title: 'Lỗi'
+      })
+    }
+  } catch (error) {
+    yield put(me.notificationsFail(error))
+    OpenNotification({
+      type: 'error',
+      description: error,
+      title: 'Lỗi'
+    })
+  }
+}
 export function* actionMe() {
   yield takeEvery(type.ME_CONSTRUCTION, getProfileUser)
   yield takeEvery(type.CHANGE_PASSWORD, changePasswordUser)
   yield takeEvery(type.CHANGE_PROFILE, changeProfileUser)
+  yield takeEvery(type.NOTIFICATION, notificationsUser)
 }

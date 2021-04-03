@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from 'react'
-import { Select, TimePicker } from 'antd'
+import { Select, DatePicker } from 'antd'
 import { Line } from 'react-chartjs-2'
 import moment from 'moment'
 import stateReducer from '@components/commonFun/stateReducer'
@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { reportUser } from '@actions/report'
 
 const { Option } = Select
-const { RangePicker } = TimePicker
+const { RangePicker } = DatePicker
 
 function ChartUser() {
   const [state, setState] = useReducer(stateReducer, {
@@ -36,8 +36,8 @@ function ChartUser() {
   }
   const handleChangeDate = (date) => {
     setState({
-      startDate: date[0].startOf('day').valueOf(),
-      endDate: date[1].startOf('day').valueOf()
+      startDate: date ? date[0].startOf('day').valueOf() : moment().startOf('day').valueOf(),
+      endDate: date ? date[1].endOf('day').valueOf() : moment().endOf('day').valueOf()
     })
   }
   useEffect(() => {
@@ -69,6 +69,7 @@ function ChartUser() {
           onChange={handleChangeDate}
           defaultValue={[moment(startDate), moment(endDate)]}
           disabledDate={(current) => current && current > moment().endOf('day')}
+          allowClear={false}
         />
       </div>
       <div className='content'>

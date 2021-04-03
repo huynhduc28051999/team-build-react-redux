@@ -34,8 +34,8 @@ function GridReport() {
   }, [])
   const handleChangeDate = (date) => {
     setState({
-      startDate: date[0].startOf('day').valueOf(),
-      endDate: date[1].startOf('day').valueOf()
+      startDate: date ? date[0].startOf('day').valueOf() : moment().startOf('day').valueOf(),
+      endDate: date ? date[1].endOf('day').valueOf() : moment().endOf('day').valueOf()
     })
   }
   const hadleOpenDrawer = () => {
@@ -125,6 +125,7 @@ function GridReport() {
           onChange={handleChangeDate}
           defaultValue={[moment(startDate), moment(endDate)]}
           disabledDate={(current) => current > moment().endOf('day')}
+          allowClear={false}
         />
         <Button
           disabled={!showViewButton}

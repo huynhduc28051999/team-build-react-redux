@@ -8,13 +8,13 @@ import createSagaMiddleware from 'redux-saga'
 import { createStore, applyMiddleware } from 'redux'
 import { logger } from 'redux-logger'
 import { enableBatching, batchDispatchMiddleware } from 'redux-batched-actions'
-import { SocketContext, getSocket } from '@utils/socket'
+import { SocketContext, app } from '@utils/socket'
 
 const sagaMiddleware = createSagaMiddleware()
 const store = createStore(enableBatching(rootReducer), applyMiddleware(sagaMiddleware, batchDispatchMiddleware))
 sagaMiddleware.run(rootSaga)
 ReactDOM.render(
-  <SocketContext.Provider value={getSocket()}>
+  <SocketContext.Provider value={app}>
     <Provider store={store}>
       <App />
     </Provider>

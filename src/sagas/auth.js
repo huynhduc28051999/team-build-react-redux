@@ -14,9 +14,9 @@ export function* loginUser(dataBody) {
     const response = yield call(postLoginUser, dataBody)
     const { data } = response
     if (data && data.token) {
-      yield put(auth.loginContructionSuccess(data))
       const { token } = data
       localStorage.setItem("access-token", token)
+      yield put(auth.loginContructionSuccess(data))
       OpenNotification({
         type: 'success',
         description: '',

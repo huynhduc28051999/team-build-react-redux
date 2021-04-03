@@ -51,3 +51,5 @@ export const URL_API_REPORT_USER_EVENT = '/report/reportEventByUser'
 export const URL_API_REPORT_USER_EVENT_DETAIL = '/report/detail-user-event'
 
 export const URL_API_NOTIFICATION = 'user/notification'
+export const URL_API_NOTIFICATION_MAKE_READ_ALL = 'user/make-read-all'
+export const URL_API_NOTIFICATION_MAKE_READ = 'user/make-read'
