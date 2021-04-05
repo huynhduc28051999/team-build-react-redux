@@ -1,4 +1,6 @@
-export const URL_BACKEND = process.env.backend || `${window.location.protocol}//${window.location.host.split(':')[0]}:4000`
+export const URL_BACKEND = process.env.REACT_APP_ISDEV
+  ? `${window.location.protocol}//${window.location.host.split(':')[0]}:4000`
+  : 'https://shrouded-thicket-78533.herokuapp.com/'
 
 export const URL_API_LOGIN = '/auth/login'
 export const URL_API_PROFILE = '/user/profile'
