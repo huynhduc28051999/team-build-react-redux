@@ -6,6 +6,7 @@ export const PublicRoute = props => {
     isAuth,
     children
   } = props
+  // eslint-disable-next-line
   if (isAuth) return <Redirect to='/home'/>
   return <Fragment>{children}</Fragment>
 }

@@ -8,7 +8,8 @@ export const PrivateRoute = props => {
     history,
     children
   } = props
-  if (!isAuth) return <Redirect to='/login' />
+  // eslint-disable-next-line
+  if (!isAuth) return (<Redirect to='/login' />)
   return (
     <Layout history={history} children={children}/>
   )
