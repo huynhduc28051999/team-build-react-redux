@@ -22,10 +22,10 @@ axiosClient.interceptors.response.use((response) => {
   }
   return response
 }, function(error) {
-  if (error.response.status === 401) {
+  if (error?.response?.status === 401) {
     localStorage.clear('access-token')
     document.location.href = '/login'
-  } else if (error.response.status === 403) {
+  } else if (error?.response?.status === 403) {
     document.location.href = '/home'
   }
   return Promise.reject(error.response?.data?.message)
